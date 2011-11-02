@@ -19,6 +19,8 @@ set(SRC
     ${SRCROOT}/Settings.cpp
     ${SRCROOT}/iniManager.hpp
     ${SRCROOT}/iniManager.cpp
+    ${SRCROOT}/GameManager.hpp
+    ${SRCROOT}/GameManager.cpp
 )
 
 # add executable

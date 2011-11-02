@@ -1,5 +1,6 @@
 #include "Settings.hpp"
-//#include "GameEngine.hpp"
+#include "GameManager.hpp"
+
 
 int main(int argc, char* argv[])
 {
@@ -14,10 +15,11 @@ int main(int argc, char* argv[])
 			return EXIT_FAILURE;
 	}
 	
-//	GameEngine* game = new GameEngine(settings);
-//	int returnValue = game->Run();
-//	delete game;
+	GameManager* game = new GameManager(settings);
+	int returnValue = game->Run();
+	delete game;
 
-//	return returnValue;
+	return returnValue;
 }
+
 
