@@ -2,15 +2,29 @@
 #define GSMULTIPLAYERGAME_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "GameState.hpp"
+
 
 class GSMultiplayerGame : public GameState
 {
-public:
-	GSMultiplayerGame(sf::RenderWindow& window);
-	~GSMultiplayerGame();
-
-	GameState* Run();
+	public:
+		GSMultiplayerGame(sf::RenderWindow& window);
+		~GSMultiplayerGame();
+		
+		void OnEnter();
+		
+		Status Update();
+		void Render();
+		
+		GameState* OnLeave();
+		
+	private:
+		
+		
 };
 
-#endif
+
+#endif // GSMULTIPLAYERGAME_HPP
+
+

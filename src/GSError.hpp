@@ -2,16 +2,29 @@
 #define GSERROR_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "GameState.hpp"
 
 
 class GSError : public GameState
 {
-public:
-	GSError(sf::RenderWindow& window);
-	~GSError();
-
-	GameState* Run();
+	public:
+		GSError(sf::RenderWindow& window);
+		~GSError();
+		
+		void OnEnter();
+		
+		Status Update();
+		void Render();
+		
+		GameState* OnLeave();
+		
+	private:
+		
+		
 };
 
-#endif
+
+#endif // GSERROR_HPP
+
+

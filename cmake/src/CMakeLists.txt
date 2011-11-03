@@ -21,6 +21,21 @@ set(SRC
     ${SRCROOT}/iniManager.cpp
     ${SRCROOT}/GameManager.hpp
     ${SRCROOT}/GameManager.cpp
+    ${SRCROOT}/GameState.hpp
+    ${SRCROOT}/GSIntro.hpp
+    ${SRCROOT}/GSIntro.cpp
+    ${SRCROOT}/GSMenu.hpp
+    ${SRCROOT}/GSMenu.cpp
+    ${SRCROOT}/GSSettings.hpp
+    ${SRCROOT}/GSSettings.cpp
+    ${SRCROOT}/GSSingleplayerGame.hpp
+    ${SRCROOT}/GSSingleplayerGame.cpp
+    ${SRCROOT}/GSMultiplayerGame.hpp
+    ${SRCROOT}/GSMultiplayerGame.cpp
+    ${SRCROOT}/GSNetworkGame.hpp
+    ${SRCROOT}/GSNetworkGame.cpp
+    ${SRCROOT}/GSError.hpp
+    ${SRCROOT}/GSError.cpp    
 )
 
 # add executable

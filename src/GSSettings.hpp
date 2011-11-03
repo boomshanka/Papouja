@@ -2,16 +2,29 @@
 #define GSSETTINGS_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "GameState.hpp"
 
 
 class GSSettings : public GameState
 {
-public:
-	GSSettings(sf::RenderWindow& window);
-	~GSSettings();
-
-	GameState* Run();
+	public:
+		GSSettings(sf::RenderWindow& window);
+		~GSSettings();
+		
+		void OnEnter();
+		
+		Status Update();
+		void Render();
+		
+		GameState* OnLeave();
+		
+	private:
+		
+		
 };
 
-#endif
+
+#endif // GSSETTINGS_HPP
+
+

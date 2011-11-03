@@ -1,4 +1,4 @@
-#include "GameState.hpp"
+#include "GameManager.hpp"
 
 #include "GSIntro.hpp"
 #include "GSMenu.hpp"
@@ -7,13 +7,12 @@
 #include "GSSettings.hpp"
 #include "GSError.hpp"
 
-#include "GameManager.hpp"
 
 
 GameManager::GameManager(Settings& settings) :
 mySettings(settings)
 {
-	myWindow.Create(mySettings.GetVideoMode(), "Medieval War", mySettings.GetWindowStyle());
+	myWindow.Create(mySettings.GetVideoMode(), "Papouja", mySettings.GetWindowStyle());
 	myWindow.EnableVerticalSync(true);
 }
 
@@ -27,14 +26,47 @@ GameManager::~GameManager()
 
 int GameManager::Run()
 {
-/*	boost::scoped_ptr<GameState> state(new GSIntro(myWindow));
+	int returnValue = EXIT_SUCCESS;
+	GameState* temp;
 	
-	while(state)
+	myState = new GSIntro(myWindow);
+	myState->OnEnter();
+	
+	while(myWindow.IsOpened())
 	{
-		state.reset(state->Run());
+		switch(myState->Update())
+		{
+			case CONTINUE:
+				myWindow.Clear();
+				myState->Render();
+				myWindow.Display();
+				break;
+			
+			case NEXTSTATE:
+				temp = myState->OnLeave();
+				delete myState;
+				myState = temp;
+				temp = NULL;
+				myState->OnEnter();
+				break;
+				
+			case QUIT:
+				myState->OnLeave();
+				myState = NULL;
+				returnValue = EXIT_SUCCESS;
+				myWindow.Close();
+				break;
+				
+			case ABORT:
+				myState->OnLeave();
+				myState = NULL;
+				returnValue = EXIT_FAILURE;
+				myWindow.Close();
+				break;
+		}
 	}
 	
-	return GameState::GetReturnValue();*/
+	return returnValue;
 }
 
 

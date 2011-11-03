@@ -4,20 +4,37 @@
 #include <SFML/Graphics.hpp>
 
 
+enum Status
+{
+	CONTINUE,
+	NEXTSTATE,
+	QUIT,
+	ABORT
+};
+	
+
 class GameState
 {
-public:
-	GameState(sf::RenderWindow& window);
-	virtual ~GameState();
-
-	static int GetReturnValue();
-
-	virtual GameState* Run() = 0;
-protected:
-	static void SetReturnValue(int returnValue);
-	sf::RenderWindow& myWindow;
-private:
-	static int myReturnValue;
+	public:
+		GameState(sf::RenderWindow& window) : myWindow(window) {}
+		virtual ~GameState() {}
+		
+		virtual void OnEnter() = 0;
+		
+		virtual Status Update() = 0;
+		virtual void Render() = 0;
+		
+		virtual GameState* OnLeave() = 0;
+		
+	protected:
+		sf::RenderWindow& myWindow;
+		
+	private:
+		
+		
 };
 
-#endif
+
+#endif // GAMESTATE_HPP
+
+

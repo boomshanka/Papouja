@@ -2,7 +2,9 @@
 #define GAMEMANAGER_HPP
 
 #include <SFML/Graphics.hpp>
+
 #include "Settings.hpp"
+#include "GameState.hpp"
 
 
 class GameManager
@@ -16,10 +18,11 @@ class GameManager
 	private:
 		sf::RenderWindow myWindow;
 		Settings& mySettings;
+		
+		GameState* myState;
 };
 
 
 #endif // GAMEMANAGER_HPP
-
 
 
