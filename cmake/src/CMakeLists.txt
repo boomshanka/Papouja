@@ -34,6 +34,8 @@ set(SRC
     ${SRCROOT}/GSMultiplayerGame.cpp
     ${SRCROOT}/GSNetworkListener.hpp
     ${SRCROOT}/GSNetworkListener.cpp
+    ${SRCROOT}/GSNetworkConnector.hpp
+    ${SRCROOT}/GSNetworkConnector.cpp
     ${SRCROOT}/GSNetworkGame.hpp
     ${SRCROOT}/GSNetworkGame.cpp
     ${SRCROOT}/GSError.hpp
