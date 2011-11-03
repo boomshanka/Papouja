@@ -27,7 +27,7 @@ void GSIntro::OnEnter()
 
 Status GSIntro::Update()
 {
-
+	return NEXTSTATE;
 }
 
 
@@ -40,7 +40,7 @@ void GSIntro::Render()
 
 GameState* GSIntro::OnLeave()
 {
-
+	return new GSMenu(myWindow);
 }
 
 
