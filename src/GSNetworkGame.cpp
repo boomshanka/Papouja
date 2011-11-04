@@ -5,8 +5,8 @@
 
 
 
-GSNetworkGame::GSNetworkGame(sf::RenderWindow& window) :
-GameState(window)
+GSNetworkGame::GSNetworkGame(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings)
 {
 
 }

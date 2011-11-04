@@ -9,7 +9,7 @@
 class GSNetworkGame : public GameState
 {
 	public:
-		GSNetworkGame(sf::RenderWindow& window);
+		GSNetworkGame(sf::RenderWindow& window, Settings& settings);
 		~GSNetworkGame();
 		
 		void OnEnter();

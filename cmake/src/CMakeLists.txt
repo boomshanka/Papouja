@@ -19,6 +19,9 @@ set(SRC
     ${SRCROOT}/Settings.cpp
     ${SRCROOT}/iniManager.hpp
     ${SRCROOT}/iniManager.cpp
+    ${SRCROOT}/Resourcemanager.hpp
+    ${SRCROOT}/Resourcemanager.cpp
+    ${SRCROOT}/Resourcemanager.inl
     ${SRCROOT}/GameManager.hpp
     ${SRCROOT}/GameManager.cpp
     ${SRCROOT}/GameState.hpp

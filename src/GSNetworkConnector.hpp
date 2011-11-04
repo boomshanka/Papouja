@@ -9,7 +9,7 @@
 class GSNetworkConnector : public GameState
 {
 	public:
-		GSNetworkConnector(sf::RenderWindow& window);
+		GSNetworkConnector(sf::RenderWindow& window, Settings& settings);
 		~GSNetworkConnector();
 		
 		void OnEnter();

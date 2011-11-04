@@ -9,7 +9,7 @@
 class GSNetworkListener : public GameState
 {
 	public:
-		GSNetworkListener(sf::RenderWindow& window);
+		GSNetworkListener(sf::RenderWindow& window, Settings& settings);
 		~GSNetworkListener();
 		
 		void OnEnter();

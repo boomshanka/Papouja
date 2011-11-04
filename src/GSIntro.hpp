@@ -5,11 +5,13 @@
 
 #include "GameState.hpp"
 
+#include "Resourcemanager.hpp"
+
 
 class GSIntro : public GameState
 {
 	public:
-		GSIntro(sf::RenderWindow& window);
+		GSIntro(sf::RenderWindow& window, Settings& settings);
 		~GSIntro();
 		
 		void OnEnter();
@@ -20,7 +22,7 @@ class GSIntro : public GameState
 		GameState* OnLeave();
 		
 	private:
-		
+		Resourcemanager* myResourcemanager;
 		
 };
 

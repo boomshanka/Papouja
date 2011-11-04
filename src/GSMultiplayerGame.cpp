@@ -4,8 +4,8 @@
 
 
 
-GSMultiplayerGame::GSMultiplayerGame(sf::RenderWindow& window) :
-GameState(window)
+GSMultiplayerGame::GSMultiplayerGame(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings)
 {
 
 }

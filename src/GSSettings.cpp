@@ -5,8 +5,8 @@
 
 
 
-GSSettings::GSSettings(sf::RenderWindow& window) :
-GameState(window)
+GSSettings::GSSettings(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings)
 {
 
 }

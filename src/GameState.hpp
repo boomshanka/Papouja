@@ -3,6 +3,8 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "Settings.hpp"
+
 
 enum Status
 {
@@ -16,7 +18,7 @@ enum Status
 class GameState
 {
 	public:
-		GameState(sf::RenderWindow& window) : myWindow(window) {}
+		GameState(sf::RenderWindow& window, Settings& settings) : myWindow(window), mySettings(settings) {}
 		virtual ~GameState() {}
 		
 		virtual void OnEnter() = 0;
@@ -28,6 +30,7 @@ class GameState
 		
 	protected:
 		sf::RenderWindow& myWindow;
+		Settings& mySettings;
 		
 	private:
 		

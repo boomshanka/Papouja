@@ -15,6 +15,7 @@ class iniManager
 		void SaveConfigFile(std::string path = "settings.ini");
 		
 		const std::string& GetSettings(const std::string& section, const std::string& name) const;
+		void SetSettings(const std::string& section, const std::string& name, const std::string& setting);
 			
 	protected:
 		std::map<std::string, std::map<std::string, std::string> > mySettings;

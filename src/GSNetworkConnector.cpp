@@ -6,8 +6,8 @@
 
 
 
-GSNetworkConnector::GSNetworkConnector(sf::RenderWindow& window) :
-GameState(window)
+GSNetworkConnector::GSNetworkConnector(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings)
 {
 
 }

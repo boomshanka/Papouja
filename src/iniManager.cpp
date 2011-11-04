@@ -91,4 +91,9 @@ const std::string& iniManager::GetSettings(const std::string& section, const std
 }
 
 
+void iniManager::SetSettings(const std::string& section, const std::string& name, const std::string& setting)
+{
+	mySettings[section][name] = setting;
+}
+
 

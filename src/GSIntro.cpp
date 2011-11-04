@@ -4,8 +4,8 @@
 
 
 
-GSIntro::GSIntro(sf::RenderWindow& window) :
-GameState(window)
+GSIntro::GSIntro(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings), myResourcemanager(new Resourcemanager())
 {
 
 }
@@ -13,7 +13,7 @@ GameState(window)
 
 GSIntro::~GSIntro()
 {
-
+	delete myResourcemanager;
 }
 
 
@@ -40,7 +40,10 @@ void GSIntro::Render()
 
 GameState* GSIntro::OnLeave()
 {
-	return new GSMenu(myWindow);
+	Resourcemanager* resourcemanager = myResourcemanager;
+	myResourcemanager = NULL;
+	
+	return new GSMenu(myWindow, mySettings, resourcemanager);
 }
 
 

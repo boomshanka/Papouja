@@ -29,7 +29,11 @@ int GameManager::Run()
 	int returnValue = EXIT_SUCCESS;
 	GameState* temp;
 	
-	myState = new GSIntro(myWindow);
+	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
+		myState = new GSIntro(myWindow, mySettings);
+	else
+		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
+	
 	myState->OnEnter();
 	
 	while(myWindow.IsOpened())
@@ -40,7 +44,7 @@ int GameManager::Run()
 				myWindow.Clear();
 				myState->Render();
 				myWindow.Display();
-				break;
+			break;
 			
 			case NEXTSTATE:
 				temp = myState->OnLeave();
@@ -48,21 +52,22 @@ int GameManager::Run()
 				myState = temp;
 				temp = NULL;
 				myState->OnEnter();
-				break;
+			break;
 				
 			case QUIT:
 				myState->OnLeave();
 				myState = NULL;
 				returnValue = EXIT_SUCCESS;
 				myWindow.Close();
-				break;
+			break;
 				
 			case ABORT:
 				myState->OnLeave();
 				myState = NULL;
 				returnValue = EXIT_FAILURE;
 				myWindow.Close();
-				break;
+			break;
+			
 		}
 	}
 	

@@ -9,7 +9,7 @@
 class GSSettings : public GameState
 {
 	public:
-		GSSettings(sf::RenderWindow& window);
+		GSSettings(sf::RenderWindow& window, Settings& settings);
 		~GSSettings();
 		
 		void OnEnter();

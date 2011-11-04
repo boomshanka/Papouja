@@ -9,7 +9,7 @@
 class GSMultiplayerGame : public GameState
 {
 	public:
-		GSMultiplayerGame(sf::RenderWindow& window);
+		GSMultiplayerGame(sf::RenderWindow& window, Settings& settings);
 		~GSMultiplayerGame();
 		
 		void OnEnter();

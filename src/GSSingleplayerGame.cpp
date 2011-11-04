@@ -5,8 +5,8 @@
 
 
 
-GSSingleplayerGame::GSSingleplayerGame(sf::RenderWindow& window) :
-GameState(window)
+GSSingleplayerGame::GSSingleplayerGame(sf::RenderWindow& window, Settings& settings) :
+GameState(window, settings)
 {
 
 }

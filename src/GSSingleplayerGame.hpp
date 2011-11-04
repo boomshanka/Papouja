@@ -9,7 +9,7 @@
 class GSSingleplayerGame : public GameState
 {
 	public:
-		GSSingleplayerGame(sf::RenderWindow& window);
+		GSSingleplayerGame(sf::RenderWindow& window, Settings& settings);
 		~GSSingleplayerGame();
 		
 		void OnEnter();

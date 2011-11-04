@@ -12,7 +12,7 @@ class Settings : public iniManager
 	public:
 		Settings(int argc, char* argv[]);
 		~Settings();
-	
+		
 		void LoadDefaults();
 		int ParseArguments();
 	
