@@ -42,7 +42,19 @@ set(SRC
     ${SRCROOT}/GSNetworkGame.hpp
     ${SRCROOT}/GSNetworkGame.cpp
     ${SRCROOT}/GSError.hpp
-    ${SRCROOT}/GSError.cpp    
+    ${SRCROOT}/GSError.cpp
+    ${SRCROOT}/Game.hpp
+    ${SRCROOT}/Game.cpp
+    ${SRCROOT}/Gamefield.hpp
+    ${SRCROOT}/Gamefield.cpp
+    ${SRCROOT}/HumanPlayer.hpp
+    ${SRCROOT}/HumanPlayer.cpp
+    ${SRCROOT}/ComputerPlayer.hpp
+    ${SRCROOT}/ComputerPlayer.cpp
+    ${SRCROOT}/NetworkPlayer.hpp
+    ${SRCROOT}/NetworkPlayer.cpp
+    ${SRCROOT}/NetworkSender.hpp
+    ${SRCROOT}/NetworkSender.cpp
 )
 
 # add executable

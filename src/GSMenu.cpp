@@ -3,6 +3,8 @@
 #include "GSIntro.hpp"
 #include "GSSingleplayerGame.hpp"
 #include "GSMultiplayerGame.hpp"
+#include "GSNetworkListener.hpp"
+#include "GSNetworkConnector.hpp"
 #include "GSNetworkGame.hpp"
 #include "GSSettings.hpp"
 #include "GSError.hpp"
@@ -34,7 +36,7 @@ void GSMenu::OnEnter()
 {
 	try
 	{
-		myBackground.SetTexture(myResourcemanager->Get<sf::Texture>("img/background.png"));
+		myBackground.SetTexture(myResourcemanager->Get<sf::Texture>(mySettings.GetSettings("Menu", "Background")));
 		
 		myNextStatus = CONTINUE;
 	}

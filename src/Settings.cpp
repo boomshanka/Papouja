@@ -26,9 +26,21 @@ Settings::~Settings()
 
 void Settings::LoadDefaults()
 {
-	iniManager::iniManager::mySettings["Window"]["Width"] = "800";
-	iniManager::iniManager::mySettings["Window"]["Height"] = "600";
-	iniManager::iniManager::mySettings["Window"]["Style"] = WindowStyleClose;
+	iniManager::mySettings["Window"]["Width"] = "800";
+	iniManager::mySettings["Window"]["Height"] = "600";
+	iniManager::mySettings["Window"]["Style"] = WindowStyleClose;
+	
+	iniManager::mySettings["Player1"]["Left"] = "";
+	iniManager::mySettings["Player1"]["Right"] = "";
+	iniManager::mySettings["Player1"]["Down"] = "";
+	iniManager::mySettings["Player1"]["Rotate"] = "";
+	
+	iniManager::mySettings["Player2"]["Left"] = "a";
+	iniManager::mySettings["Player2"]["Right"] = "d";
+	iniManager::mySettings["Player2"]["Down"] = "s";
+	iniManager::mySettings["Player2"]["Rotate"] = "w";
+	
+	iniManager::mySettings["Menu"]["Background"] = "img/menu_background.png";
 }
 
 
@@ -103,7 +115,7 @@ void Settings::SetDesktopResolution()
 
 void Settings::Help() const
 {
-	std::cout << "    Medieval War - An isometric cross-platform real-time strategy game.\n\n";
+	std::cout << "\tPapouja - An open source PuyoPuyo clone with networkgame mode.\n\n";
 	std::cout << "Arguments are:\n";
 	std::cout << "\t-h\t  --help\t\t  Show this help text.\n";
 	std::cout << "\t-win\t  --window\t\t  Play the game in window mode.\n";
