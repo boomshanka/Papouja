@@ -28,7 +28,17 @@ void GSSingleplayerGame::OnEnter()
 
 Status GSSingleplayerGame::Update()
 {
-
+	while(myWindow.PollEvent(myEvent))
+	{
+		if(myEvent.Type == sf::Event::Closed)
+		{
+			return QUIT;
+		}
+		
+		
+	}
+	
+	return CONTINUE;
 }
 
 

@@ -28,6 +28,8 @@ class GSSingleplayerGame : public GameState
 		ComputerPlayer myComputerPlayer;
 		
 		Game myGame;
+		
+		sf::Event myEvent;
 };
 
 

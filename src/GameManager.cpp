@@ -31,7 +31,7 @@ int GameManager::Run()
 	GameState* temp;
 	
 	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
-		myState = new GSSingleplayerGame(myWindow, mySettings);//new GSIntro(myWindow, mySettings);
+		myState = new GSIntro(myWindow, mySettings); // new GSSingleplayerGame(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	
