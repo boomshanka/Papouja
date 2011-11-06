@@ -4,6 +4,7 @@
 #include "GSMenu.hpp"
 #include "GSSingleplayerGame.hpp"
 #include "GSMultiplayerGame.hpp"
+#include "GSNetworkGame.hpp"
 #include "GSSettings.hpp"
 #include "GSError.hpp"
 
@@ -30,7 +31,7 @@ int GameManager::Run()
 	GameState* temp;
 	
 	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
-		myState = new GSIntro(myWindow, mySettings);
+		myState = new GSSingleplayerGame(myWindow, mySettings);//new GSIntro(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	

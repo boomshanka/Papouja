@@ -7,6 +7,8 @@
 class NetworkSender : public HumanPlayer
 {
 	public:
+		NetworkSender(Settings& settings);
+		~NetworkSender();
 		
 	private:
 		

@@ -5,6 +5,10 @@
 
 #include "GameState.hpp"
 
+#include "HumanPlayer.hpp"
+#include "ComputerPlayer.hpp"
+#include "Game.hpp"
+
 
 class GSSingleplayerGame : public GameState
 {
@@ -20,8 +24,10 @@ class GSSingleplayerGame : public GameState
 		GameState* OnLeave();
 		
 	private:
+		HumanPlayer myHumanPlayer;
+		ComputerPlayer myComputerPlayer;
 		
-		
+		Game myGame;
 };
 
 

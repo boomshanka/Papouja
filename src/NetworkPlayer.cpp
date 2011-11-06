@@ -2,4 +2,17 @@
 
 
 
+NetworkPlayer::NetworkPlayer(Settings& settings) :
+Gamefield(settings)
+{
+
+}
+
+
+NetworkPlayer::~NetworkPlayer()
+{
+
+}
+
+
 

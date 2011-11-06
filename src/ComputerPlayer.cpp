@@ -2,4 +2,17 @@
 
 
 
+ComputerPlayer::ComputerPlayer(Settings& settings) :
+Gamefield(settings)
+{
+
+}
+
+
+ComputerPlayer::~ComputerPlayer()
+{
+
+}
+
+
 

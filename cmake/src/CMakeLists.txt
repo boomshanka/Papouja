@@ -12,7 +12,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake//Modules/")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_SOURCE_DIR}/")
 
 
-# all source files
+# all source files (Musicmanager fehlt)
 set(SRC
     ${SRCROOT}/Main.cpp
     ${SRCROOT}/Settings.hpp
@@ -55,6 +55,8 @@ set(SRC
     ${SRCROOT}/NetworkPlayer.cpp
     ${SRCROOT}/NetworkSender.hpp
     ${SRCROOT}/NetworkSender.cpp
+    ${SRCROOT}/Stone.hpp
+    ${SRCROOT}/Stone.cpp
 )
 
 # add executable

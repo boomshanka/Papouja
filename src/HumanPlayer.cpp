@@ -2,4 +2,17 @@
 
 
 
+HumanPlayer::HumanPlayer(Settings& settings) :
+Gamefield(settings)
+{
+
+}
+
+
+HumanPlayer::~HumanPlayer()
+{
+
+}
+
+
 

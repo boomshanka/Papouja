@@ -7,6 +7,8 @@
 class NetworkPlayer : public Gamefield
 {
 	public:
+		NetworkPlayer(Settings& settings);
+		~NetworkPlayer();
 		
 	private:
 		

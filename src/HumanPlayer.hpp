@@ -7,6 +7,8 @@
 class HumanPlayer : public Gamefield
 {
 	public:
+		HumanPlayer(Settings& settings);
+		~HumanPlayer();
 		
 	private:
 		
