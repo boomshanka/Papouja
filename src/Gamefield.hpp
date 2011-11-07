@@ -29,8 +29,7 @@ namespace gamefield
 	enum Gamestatus
 	{
 		CONTINUE,
-		PLAYER1WIN,
-		PLAYER2WIN
+		LOOSE
 	};
 }
 
@@ -43,14 +42,27 @@ class Gamefield
 		
 		void LoadResource();
 		
-		void Move(gamefield::Direction direction);
+		gamefield::Gamestatus Update();
 		
-		bool Update();
+		void Move(gamefield::Direction direction);
+		void StepDown();
+		
+		void NextStones();
+		
 		void Draw(sf::RenderWindow& window);
+		
 	private:
+		Settings& mySettings;
+		
+		gamefield::Status myStatus;
+		
 		Stone* myStones[8][16];
 		
-		Settings& mySettings;
+		Stone* myMoveStones[2];
+		Stone* myNextStones[2];
+		
+		
+		Color GetRandomColor(unsigned int max_colors = 5);
 };
 
 
