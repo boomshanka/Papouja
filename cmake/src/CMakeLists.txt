@@ -43,6 +43,8 @@ set(SRC
     ${SRCROOT}/GSNetworkGame.cpp
     ${SRCROOT}/GSError.hpp
     ${SRCROOT}/GSError.cpp
+    ${SRCROOT}/GUI.hpp
+    ${SRCROOT}/GUI.cpp
     ${SRCROOT}/Game.hpp
     ${SRCROOT}/Game.cpp
     ${SRCROOT}/Gamefield.hpp

@@ -9,7 +9,7 @@
 #include "GSError.hpp"
 
 
-
+#include "GSNetworkListener.hpp"
 GameManager::GameManager(Settings& settings) :
 mySettings(settings)
 {
@@ -31,7 +31,7 @@ int GameManager::Run()
 	GameState* temp;
 	
 	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
-		myState = new GSIntro(myWindow, mySettings); // new GSSingleplayerGame(myWindow, mySettings);
+		myState = new GSNetworkListener(myWindow, mySettings, NULL); // new GSSingleplayerGame(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	

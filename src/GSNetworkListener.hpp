@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameState.hpp"
+#include "GUI.hpp"
 
 #include "Resourcemanager.hpp"
 
@@ -30,7 +31,7 @@ namespace networklistener
 }
 
 
-class GSNetworkListener : public GameState
+class GSNetworkListener : public GameState, public Gui
 {
 	public:
 		GSNetworkListener(sf::RenderWindow& window, Settings& settings, Resourcemanager* resourcemanager);
@@ -67,6 +68,12 @@ class GSNetworkListener : public GameState
 		std::string myNameString;
 		std::string myPortString;
 		std::string* editstr;
+		
+		void Slot1();
+		void Slot2();
+		void Slot3();
+		void Slot4();
+		void Slot5();
 };
 
 
