@@ -41,6 +41,12 @@ void Settings::LoadDefaults()
 	iniManager::mySettings["Player2"]["Rotate"] = "w";
 	
 	iniManager::mySettings["Menu"]["Background"] = "img/menu_background.png";
+	
+	iniManager::mySettings["Gui"]["Font"] = "";
+	
+	iniManager::mySettings["Game"]["Name"] = "Player";
+	iniManager::mySettings["Game"]["Ip"] = "127.0.0.1";
+	iniManager::mySettings["Game"]["Port"] = "4200";
 }
 
 

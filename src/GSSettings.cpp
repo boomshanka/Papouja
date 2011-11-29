@@ -5,8 +5,8 @@
 
 
 
-GSSettings::GSSettings(sf::RenderWindow& window, Settings& settings) :
-GameState(window, settings)
+GSSettings::GSSettings(sf::RenderWindow& window, Settings& settings, Resourcemanager* resourcemanager) :
+GameState(window, settings) //FIXME , myResourcemanager(resourcemanager)
 {
 
 }

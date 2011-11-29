@@ -4,12 +4,34 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameState.hpp"
+#include "GUI.hpp"
+
+#include "Resourcemanager.hpp"
 
 
-class GSNetworkConnector : public GameState
+namespace networkconnector
+{
+	enum Menupoint
+	{
+		NAME,
+		IP,
+		PORT,
+		CONNECT
+	};
+	
+	enum Status
+	{
+		CHOOSE,
+		EDIT,
+		CONNECTED
+	};
+}
+
+
+class GSNetworkConnector : public GameState, public Gui
 {
 	public:
-		GSNetworkConnector(sf::RenderWindow& window, Settings& settings);
+		GSNetworkConnector(sf::RenderWindow& window, Settings& settings, Resourcemanager* resourcemanager);
 		~GSNetworkConnector();
 		
 		void OnEnter();
@@ -20,8 +42,31 @@ class GSNetworkConnector : public GameState
 		GameState* OnLeave();
 		
 	private:
+		Resourcemanager* myResourcemanager;
 		
+		std::string myNameString;
+		std::string myIpString;
+		std::string myPortString;
 		
+		std::string* editstr;
+		
+		Status myNextStatus;
+		GameState* myNextState;
+		
+		std::size_t myCurserPosition;
+		
+		networkconnector::Menupoint myMenupoint;
+		networkconnector::Status myMenustatus;
+		
+		sf::TcpSocket* mySocket;
+		
+		void Connect();
+		
+		void Slot1();
+		void Slot2();
+		void Slot3();
+		void Slot4();
+		void Slot5();
 };
 
 

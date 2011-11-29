@@ -73,6 +73,12 @@ void GSError::OnEnter()
 		case CANNOTLISTENT:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
+			txtError.SetString("Error while listening to a connection:");
+			txtMessage.SetString(myErrorMessage);
+			txtSolution.SetString("Please use another port or check your network configuration.");
+			
+			std::cerr << "Error while listening to a connection: " << myErrorMessage << "\n";
+			std::cerr << "Please use another port and check your network configuration.\n";
 		break;
 	}
 	

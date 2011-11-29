@@ -61,6 +61,19 @@ void MenuPoint::Draw(sf::RenderWindow& window)
 }
 
 
+
+void MenuPoint::Select()
+{
+	myText.SetColor(sf::Color::Red);
+}
+
+
+void MenuPoint::Deselect()
+{
+	myText.SetColor(sf::Color::White);
+}
+
+
 //  --  //
 
 
@@ -79,7 +92,8 @@ Gui::~Gui()
 
 void Gui::LoadResources()
 {
-
+	
+	myMenuPoints[myMenuPosition].Select();
 }
 
 
@@ -111,6 +125,9 @@ void Gui::CheckEvents(const sf::Event& event)
 		switch(event.Key.Code)
 		{
 			case sf::Keyboard::Up:
+			myMenuPoints[myMenuPosition].Deselect();
+			while(true)
+			{
 				if(myMenuPosition == 0)
 				{
 					myMenuPosition = 4;
@@ -119,9 +136,15 @@ void Gui::CheckEvents(const sf::Event& event)
 				{
 					--myMenuPosition;
 				}
+				if(myMenuPoints[myMenuPosition].IsActivated()) break;
+			}
+			myMenuPoints[myMenuPosition].Select();
 			break;
 			
 			case sf::Keyboard::Down:
+			myMenuPoints[myMenuPosition].Deselect();
+			while(true)
+			{
 				if(myMenuPosition == 4)
 				{
 					myMenuPosition = 0;
@@ -130,6 +153,9 @@ void Gui::CheckEvents(const sf::Event& event)
 				{
 					++myMenuPosition;
 				}
+				if(myMenuPoints[myMenuPosition].IsActivated()) break;
+			}
+			myMenuPoints[myMenuPosition].Select();
 			break;
 			
 			case sf::Keyboard::Return:
@@ -169,8 +195,7 @@ void Gui::Render()
 	{
 		for(std::size_t i = 0; i < 5; ++i)
 		{
-			if(myMenuPoints[i].IsActivated())
-				myMenuPoints[i].Draw(myWindow);
+			myMenuPoints[i].Draw(myWindow);
 		}
 	}
 }

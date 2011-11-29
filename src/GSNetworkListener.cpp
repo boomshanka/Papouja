@@ -6,11 +6,12 @@
 
 #include <SFML/Window/Keyboard.hpp>
 
+#include <sstream>
+
 
 
 GSNetworkListener::GSNetworkListener(sf::RenderWindow& window, Settings& settings, Resourcemanager* resourcemanager) :
-GameState(window, settings), myResourcemanager(resourcemanager), myMenupoint(networklistener::NAME), myMenustatus(networklistener::CHOOSE),
-Gui(window, settings, resourcemanager)
+GameState(window, settings), Gui(window, settings, resourcemanager), myResourcemanager(resourcemanager), myMenupoint(networklistener::NAME), myMenustatus(networklistener::CHOOSE), myListenerThread(&GSNetworkListener::Listening, this), mySocket(NULL)
 {
 
 }
@@ -18,16 +19,26 @@ Gui(window, settings, resourcemanager)
 
 GSNetworkListener::~GSNetworkListener()
 {
-
+	StopListening();
+	delete myResourcemanager;
 }
 
 
 
 void GSNetworkListener::OnEnter()
 {
+	//try
+	{
+		Gui::LoadResources();
+	}
+	
+	myNameString = GameState::mySettings.GetSettings("Game", "Name");
+	myPortString = GameState::mySettings.GetSettings("Game", "Port");
+	
 	Gui::SetMenupointText(0, "Name: " + myNameString);
 	Gui::SetMenupointText(1, "Port: " + myPortString);
 	Gui::SetMenupointText(2, "Start Listening");
+	Gui::ActivateMenupoint(3, false);
 	Gui::SetMenupointText(4, "Main Menu");
 	
 	myNextStatus = CONTINUE;
@@ -50,6 +61,7 @@ Status GSNetworkListener::Update()
 			if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Escape)
 			{
 				myNextState = new GSMenu(GameState::myWindow, GameState::mySettings, myResourcemanager);
+				myResourcemanager = NULL;
 			
 				myNextStatus = NEXTSTATE;
 			}
@@ -156,20 +168,62 @@ void GSNetworkListener::Edit()
 
 void GSNetworkListener::StartListening()
 {
-
+	std::stringstream sstr(myPortString);
+	unsigned short port;
+	sstr >> port;
+	
+	if(myListener.Listen(port) == sf::Socket::Done)
+	{
+		mySocket = new sf::TcpSocket();
+		myListener.SetBlocking(false);
+		myListenerThread.Launch();
+	}
+	else
+	{
+		myNextState = new GSError(GameState::myWindow, GameState::mySettings, CANNOTLISTENT, "Cannot listen on port " + myPortString + ".");
+		myNextStatus = NEXTSTATE;
+	}
 }
 
 
 void GSNetworkListener::StopListening()
 {
-	
+	myListener.Close();
+	myMenustatus = networklistener::CHOOSE;
+	myListenerThread.Wait();
+	delete mySocket;
+	mySocket = NULL;
 }
 
 
 
 void GSNetworkListener::Listening()
 {
+	while(myMenustatus == networklistener::LISTENING)
+	{
+		switch(myListener.Accept(*mySocket))
+		{
+			case sf::Socket::Done:
+				Connected();
+			break;
+			
+			default:
+			
+			break;
+		}
+		
+		sf::Sleep(100);
+	}
+}
+
+
+void GSNetworkListener::Connected()
+{
+	myMenustatus = networklistener::CONNECTED;
+	myListener.Close();
 	
+	Gui::SetMenupointText(2, "Connected! Start Game with " + mySocket->GetRemoteAddress().ToString());
+	Gui::SetMenupointText(4, "Drop Connection");
 }
 
 
@@ -199,15 +253,18 @@ void GSNetworkListener::Slot3()
 		case networklistener::CHOOSE:
 			StartListening();
 			myMenustatus = networklistener::LISTENING;
+			Gui::SetMenupointText(2, "Is Listening...");
+			Gui::SetMenupointText(4, "Stop Listening");
+			Gui::ActivateMenupoint(0, false);
+			Gui::ActivateMenupoint(1, false);
 		break;
 		
 		case networklistener::LISTENING:
-			StopListening();
-			myMenustatus = networklistener::CHOOSE;
 		break;
 		
 		case networklistener::CONNECTED:
 			myNextState = new GSNetworkGame(GameState::myWindow, GameState::mySettings);//, mySocket); FIXME
+			mySocket = NULL;
 			myNextStatus = NEXTSTATE;
 		break;
 		
@@ -227,18 +284,19 @@ void GSNetworkListener::Slot5()
 	switch(myMenustatus)
 	{
 		case networklistener::CHOOSE:
-	//		StartListening();
-	//		myMenustatus = networklistener::LISTENING;
+		myNextState = new GSMenu(GameState::myWindow, GameState::mySettings, myResourcemanager);
+		myResourcemanager = NULL;
+		myNextStatus = NEXTSTATE;
 		break;
 		
 		case networklistener::LISTENING:
-	//		StopListening();
-	//		myMenustatus = networklistener::CHOOSE;
-		break;
-		
 		case networklistener::CONNECTED:
-	//		myNextState = new GSNetworkGame(GameState::myWindow, GameState::mySettings);//, mySocket); FIXME
-	//		myNextStatus = NEXTSTATE;
+			StopListening();
+			Gui::SetMenupointText(2, "Start Listening");
+			Gui::SetMenupointText(4, "Main Menu");
+			Gui::ActivateMenupoint(0, true);
+			Gui::ActivateMenupoint(1, true);
+			myMenustatus = networklistener::CHOOSE;
 		break;
 		
 		default: break;

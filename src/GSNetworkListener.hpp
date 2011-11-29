@@ -2,6 +2,8 @@
 #define GSNETWORKLISTENER_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/System.hpp>
+#include <SFML/Network.hpp>
 
 #include "GameState.hpp"
 #include "GUI.hpp"
@@ -53,6 +55,8 @@ class GSNetworkListener : public GameState, public Gui
 		
 		void Listening();
 		
+		void Connected();
+		
 		std::size_t myCurserPosition;
 		
 		Resourcemanager* myResourcemanager;
@@ -68,6 +72,10 @@ class GSNetworkListener : public GameState, public Gui
 		std::string myNameString;
 		std::string myPortString;
 		std::string* editstr;
+		
+		sf::Thread myListenerThread;
+		sf::TcpListener myListener;
+		sf::TcpSocket* mySocket;
 		
 		void Slot1();
 		void Slot2();

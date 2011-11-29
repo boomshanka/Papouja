@@ -13,7 +13,7 @@ project(Papouja)
 include(${CMAKE_SOURCE_DIR}/cmake/Config.cmake)
 
 # dependencies
-find_package(SFML 2.0 REQUIRED WINDOW GRAPHICS SYSTEM AUDIO)
+find_package(SFML 2.0 REQUIRED WINDOW GRAPHICS SYSTEM AUDIO NETWORK)
 
 set(DEPS ${SFML_LIBRARIES})
 

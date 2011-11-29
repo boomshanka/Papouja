@@ -4,12 +4,15 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameState.hpp"
+#include "GUI.hpp"
+
+#include "Resourcemanager.hpp"
 
 
 class GSSettings : public GameState
 {
 	public:
-		GSSettings(sf::RenderWindow& window, Settings& settings);
+		GSSettings(sf::RenderWindow& window, Settings& settings, Resourcemanager* resourcemanager);
 		~GSSettings();
 		
 		void OnEnter();

@@ -22,6 +22,9 @@ class MenuPoint
 		void Activate(bool activate);
 		bool IsActivated();
 		
+		void Select();
+		void Deselect();
+		
 		sf::FloatRect GetRect();
 		void Draw(sf::RenderWindow& window);
 		

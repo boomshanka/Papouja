@@ -4,11 +4,12 @@
 #include <SFML/Graphics.hpp>
 
 #include "GameState.hpp"
+#include "GUI.hpp"
 
 #include "Resourcemanager.hpp"
 
 
-class GSMenu : public GameState
+class GSMenu : public GameState, public Gui
 {
 	public:
 		GSMenu(sf::RenderWindow& window, Settings& settings);
@@ -27,10 +28,18 @@ class GSMenu : public GameState
 		
 		sf::Sprite myBackground;
 		
+		sf::Event myEvent;
+		
+		bool isNetworkChoosed;
 		
 		Status myNextStatus;
 		GameState* myNextState;
 		
+		void Slot1();
+		void Slot2();
+		void Slot3();
+		void Slot4();
+		void Slot5();
 };
 
 
