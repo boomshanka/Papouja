@@ -65,8 +65,11 @@ Status GSNetworkGame::Update()
 				switch(myGameStatus)
 				{
 					case network::QUIT:
+					{
+						sf::Packet packet; packet << DISCONNECT; Send(packet);
 						myNextState = new GSMenu(myWindow, mySettings);
 						myNextStatus = NEXTSTATE;
+					}
 					break;
 					
 					case network::CHAT:
@@ -94,7 +97,6 @@ Status GSNetworkGame::Update()
 					packet << myChatString;
 					Send(packet);
 					AddMessage("Me: " + myChatString);
-					std::cout << "Me: " + myChatString << "\n";
 					myChatString.clear();
 					myGameStatus = network::GAME;
 					myCurserPosition = 0;
@@ -310,7 +312,14 @@ void GSNetworkGame::Receive()
 			case MESSAGE:
 				packet >> temp;
 				AddMessage(temp);
-				std::cout << temp << "\n";
+			break;
+			
+			case DISCONNECT:
+				AddMessage("Player disconnected!", sf::Color::Red);
+				sf::Sleep(3000);
+				myNextStatus = NEXTSTATE;
+				if(myNextState == NULL)
+					myNextState = new GSMenu(myWindow, mySettings);
 			break;
 			
 			default: break;
@@ -331,16 +340,19 @@ void GSNetworkGame::Send(sf::Packet& packet)
 
 
 
-void GSNetworkGame::AddMessage(const std::string& message)
+void GSNetworkGame::AddMessage(const std::string& message, const sf::Color& color)
 {
 	myMessageMutex.Lock();
 	myChatMessages.push_front(std::make_pair(sf::Text(message), sf::Clock()));
 	myChatMessages.front().first.SetCharacterSize(myWindow.GetWidth() / 50);
 	myChatMessages.front().first.SetPosition(static_cast<float>(myWindow.GetWidth()) / 50.f, static_cast<float>(myWindow.GetHeight()) * 0.6f);
+	myChatMessages.front().first.SetColor(color);
 	myChatMessages.front().second.Reset();
 	myMessageClock.Reset();
 	isScrolling = true;
 	myMessageMutex.Unlock();
+	
+	std::cout << message << "\n";
 }
 
 

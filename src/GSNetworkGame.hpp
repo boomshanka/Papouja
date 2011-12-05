@@ -81,7 +81,7 @@ class GSNetworkGame : public GameState
 		void Receive();
 		void Send(sf::Packet& packet);
 		
-		void AddMessage(const std::string& message);
+		void AddMessage(const std::string& message, const sf::Color& color = sf::Color::White);
 };
 
 
