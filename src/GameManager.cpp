@@ -32,7 +32,7 @@ int GameManager::Run()
 	GameState* temp;
 	
 	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
-		myState = new GSMenu(myWindow, mySettings); // new GSSingleplayerGame(myWindow, mySettings);
+		myState = new GSMenu(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	

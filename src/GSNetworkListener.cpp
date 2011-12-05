@@ -61,6 +61,7 @@ Status GSNetworkListener::Update()
 			if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Escape)
 			{
 				myNextState = new GSMenu(GameState::myWindow, GameState::mySettings, myResourcemanager);
+				
 				myResourcemanager = NULL;
 			
 				myNextStatus = NEXTSTATE;
@@ -98,7 +99,9 @@ Status GSNetworkListener::Update()
 
 void GSNetworkListener::Render()
 {
+	myGuiMutex.Lock();
 	Gui::Render();
+	myGuiMutex.Unlock();
 }
 
 
@@ -214,16 +217,36 @@ void GSNetworkListener::Listening()
 		
 		sf::Sleep(100);
 	}
+	while(myMenustatus == networklistener::CONNECTED)
+	{
+		sf::Sleep(100);
+		
+		if(mySocket->GetRemoteAddress() == sf::IpAddress::None)
+		{
+			myGuiMutex.Lock();
+			myMenustatus = networklistener::CHOOSE;
+			delete mySocket;
+			mySocket = NULL;
+			
+			Gui::SetMenupointText(2, "Connection Lost - Start Listening again");
+			Gui::SetMenupointText(4, "Main Menu");
+			Gui::ActivateMenupoint(0, true);
+			Gui::ActivateMenupoint(1, true);
+			myGuiMutex.Unlock();
+		}
+	}
 }
 
 
 void GSNetworkListener::Connected()
 {
+	myGuiMutex.Lock();
 	myMenustatus = networklistener::CONNECTED;
 	myListener.Close();
 	
 	Gui::SetMenupointText(2, "Connected! Start Game with " + mySocket->GetRemoteAddress().ToString());
 	Gui::SetMenupointText(4, "Drop Connection");
+	myGuiMutex.Unlock();
 }
 
 
@@ -259,11 +282,10 @@ void GSNetworkListener::Slot3()
 			Gui::ActivateMenupoint(1, false);
 		break;
 		
-		case networklistener::LISTENING:
-		break;
-		
 		case networklistener::CONNECTED:
-			myNextState = new GSNetworkGame(GameState::myWindow, GameState::mySettings);//, mySocket); FIXME
+			myNextState = new GSNetworkGame(GameState::myWindow, GameState::mySettings, mySocket);
+			myMenustatus = networklistener::CHOOSE;
+			myListenerThread.Wait();
 			mySocket = NULL;
 			myNextStatus = NEXTSTATE;
 		break;
@@ -298,8 +320,6 @@ void GSNetworkListener::Slot5()
 			Gui::ActivateMenupoint(1, true);
 			myMenustatus = networklistener::CHOOSE;
 		break;
-		
-		default: break;
 	}
 }
 

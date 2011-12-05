@@ -2,6 +2,7 @@
 #define GSNETWORKCONNECTOR_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Network.hpp>
 
 #include "GameState.hpp"
 #include "GUI.hpp"
@@ -60,6 +61,9 @@ class GSNetworkConnector : public GameState, public Gui
 		
 		sf::TcpSocket* mySocket;
 		
+		sf::Event myEvent;
+		
+		void Edit();
 		void Connect();
 		
 		void Slot1();

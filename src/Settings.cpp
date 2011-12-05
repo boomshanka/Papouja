@@ -146,10 +146,10 @@ sf::VideoMode Settings::GetVideoMode() const
 }
 
 
-unsigned long Settings::GetWindowStyle() const
+sf::Uint32 Settings::GetWindowStyle() const
 {
 	std::stringstream sstr;
-	unsigned long style;
+	sf::Uint32 style;
 	sstr << (*(*iniManager::mySettings.find("Window")).second.find("Style")).second;
 	sstr >> style;
 	return style;

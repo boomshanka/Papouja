@@ -17,7 +17,7 @@ class Settings : public iniManager
 		int ParseArguments();
 	
 		sf::VideoMode GetVideoMode() const;
-		unsigned long GetWindowStyle() const;
+		sf::Uint32 GetWindowStyle() const;
 		
 	private:
 		void Help() const;

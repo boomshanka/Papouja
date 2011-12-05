@@ -63,11 +63,23 @@ void GSError::OnEnter()
 		case LOSTCONNECTION:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
+			txtError.SetString("Error with the network connection:");
+			txtMessage.SetString(myErrorMessage);
+			txtSolution.SetString("Please check your network configuration and try again.");
+			
+			std::cerr << "Error with the network connection: " << myErrorMessage << "\n";
+			std::cerr << "Please check your network configuration and try again.\n";
 		break;
 		
 		case CANNOTCONNECT:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
+			txtError.SetString("Error while connecting to a server:");
+			txtMessage.SetString(myErrorMessage);
+			txtSolution.SetString("Please check the address and the port of the server.");
+			
+			std::cerr << "Error while connecting to a server: " << myErrorMessage << "\n";
+			std::cerr << "Please check the address and the port of the server.\n";
 		break;
 		
 		case CANNOTLISTENT:

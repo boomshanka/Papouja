@@ -77,6 +77,8 @@ class GSNetworkListener : public GameState, public Gui
 		sf::TcpListener myListener;
 		sf::TcpSocket* mySocket;
 		
+		sf::Mutex myGuiMutex;
+		
 		void Slot1();
 		void Slot2();
 		void Slot3();
