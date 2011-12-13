@@ -16,3 +16,10 @@ Game::~Game()
 
 
 
+void Game::Draw(sf::RenderWindow& window)
+{
+
+}
+
+
+

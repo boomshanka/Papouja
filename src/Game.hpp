@@ -11,6 +11,8 @@ class Game
 		Game(Gamefield& field1, Gamefield& field2);
 		~Game();
 		
+		void Draw(sf::RenderWindow& window);
+		
 	private:
 		Gamefield& myFirstGamefield;
 		Gamefield& mySecondGamefield;

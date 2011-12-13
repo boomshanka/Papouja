@@ -17,6 +17,7 @@ find_package(SFML 2.0 REQUIRED WINDOW GRAPHICS SYSTEM AUDIO NETWORK)
 
 set(DEPS ${SFML_LIBRARIES})
 
+
 # set error flags
 set(CMAKE_CXX_FLAGS "-Wall -Wextra -Wconversion -Wshadow -pedantic -pedantic-errors")
 

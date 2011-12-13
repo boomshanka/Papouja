@@ -65,11 +65,12 @@ class Gui
 		GuiStatus GetGuiStatus();
 		bool IsEnabled();
 		
-	private:
+	protected:
 		sf::RenderWindow& myWindow;
 		Settings& mySettings;
 		Resourcemanager* myResourcemanager;
 		
+	private:
 		std::size_t myMenuPosition;
 		sf::Clock myClock;
 		

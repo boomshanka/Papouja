@@ -32,26 +32,39 @@ Status GSSingleplayerGame::Update()
 	{
 		if(myEvent.Type == sf::Event::Closed)
 		{
-			return QUIT;
+			myNextStatus = QUIT;
 		}
-		
-		
+		else if(myEvent.Type == sf::Event::KeyPressed)
+		{
+			if(myEvent.Key.Code == sf::Keyboard::Escape)
+			{
+				if(myEscapeClock.GetElapsedTime() < 500)
+				{
+					myNextStatus = NEXTSTATE;
+					myNextState = new GSMenu(myWindow, mySettings);
+				}
+				else
+				{
+					myEscapeClock.Reset();
+				}
+			}
+		}
 	}
 	
-	return CONTINUE;
+	return myNextStatus;
 }
 
 
 void GSSingleplayerGame::Render()
 {
-
+	myGame.Draw(myWindow);
 }
 
 
 
 GameState* GSSingleplayerGame::OnLeave()
 {
-
+	return myNextState;
 }
 
 

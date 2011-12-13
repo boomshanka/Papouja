@@ -29,7 +29,12 @@ class GSSingleplayerGame : public GameState
 		
 		Game myGame;
 		
+		Status myNextStatus;
+		GameState* myNextState;
+		
 		sf::Event myEvent;
+		
+		sf::Clock myEscapeClock;
 };
 
 

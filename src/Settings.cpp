@@ -47,6 +47,9 @@ void Settings::LoadDefaults()
 	iniManager::mySettings["Game"]["Name"] = "Player";
 	iniManager::mySettings["Game"]["Ip"] = "127.0.0.1";
 	iniManager::mySettings["Game"]["Port"] = "4200";
+	iniManager::mySettings["Game"]["MusicVolume"] = "85";
+	iniManager::mySettings["Game"]["SoundVolume"] = "75";
+	iniManager::mySettings["Game"]["AiLevel"] = "1";
 }
 
 

@@ -12,7 +12,7 @@
 
 
 GSMenu::GSMenu(sf::RenderWindow& window, Settings& settings) :
-GameState(window, settings), Gui(window, settings, NULL), myResourcemanager(new Resourcemanager()), isNetworkChoosed(false)
+GameState(window, settings), Gui(window, settings, new Resourcemanager()), myResourcemanager(Gui::myResourcemanager), isNetworkChoosed(false)
 {
 
 }

@@ -160,14 +160,14 @@ void GSNetworkGame::UpdateMessages()
 	myMessageMutex.Lock();
 	for(std::list<std::pair<sf::Text, sf::Clock> >::reverse_iterator it = myChatMessages.rbegin(); it != myChatMessages.rend(); ++it)
 	{
-		if((*it).second.GetElapsedTime() < 15000)
+		if((*it).second.GetElapsedTime() < 25000)
 			break;
 		
 		sf::Color color = (*it).first.GetColor();
-		color.a = static_cast<unsigned char>(-0.1275f * (static_cast<float>((*it).second.GetElapsedTime()) - 17000.f));
+		color.a = static_cast<unsigned char>(-0.1275f * (static_cast<float>((*it).second.GetElapsedTime()) - 27000.f));
 		(*it).first.SetColor(color);
 	}
-	while(myChatMessages.size() > 0 && myChatMessages.back().second.GetElapsedTime() > 17000)
+	while(myChatMessages.size() > 0 && myChatMessages.back().second.GetElapsedTime() > 27000)
 	{
 		myChatMessages.pop_back();
 	}
