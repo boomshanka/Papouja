@@ -42,9 +42,9 @@ void GSError::OnEnter()
 		
 		case RESOURCE:
 			myNextState = new GSMenu(myWindow, mySettings);
-			txtError.SetString("Error while loading resources:");
-			txtMessage.SetString(myErrorMessage);
-			txtSolution.SetString("Please execute the program from the right destination.");
+			txtError.setString("Error while loading resources:");
+			txtMessage.setString(myErrorMessage);
+			txtSolution.setString("Please execute the program from the right destination.");
 			
 			std::cerr << "Error while loading media: " << myErrorMessage << "\n";
 			std::cerr << "Please execute the program from the right destination.\n";
@@ -52,9 +52,9 @@ void GSError::OnEnter()
 		
 		case IMPORTANTRESOURCE:
 			myNextStatus = ABORT;
-			txtError.SetString("Error while loading important resources:");
-			txtMessage.SetString(myErrorMessage);
-			txtSolution.SetString("Please execute the program from the right destination.");
+			txtError.setString("Error while loading important resources:");
+			txtMessage.setString(myErrorMessage);
+			txtSolution.setString("Please execute the program from the right destination.");
 			
 			std::cerr << "Error while loading important media: " << myErrorMessage << "\n";
 			std::cerr << "Please execute the program from the right destination.\n";
@@ -63,9 +63,9 @@ void GSError::OnEnter()
 		case LOSTCONNECTION:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
-			txtError.SetString("Error with the network connection:");
-			txtMessage.SetString(myErrorMessage);
-			txtSolution.SetString("Please check your network configuration and try again.");
+			txtError.setString("Error with the network connection:");
+			txtMessage.setString(myErrorMessage);
+			txtSolution.setString("Please check your network configuration and try again.");
 			
 			std::cerr << "Error with the network connection: " << myErrorMessage << "\n";
 			std::cerr << "Please check your network configuration and try again.\n";
@@ -74,9 +74,9 @@ void GSError::OnEnter()
 		case CANNOTCONNECT:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
-			txtError.SetString("Error while connecting to a server:");
-			txtMessage.SetString(myErrorMessage);
-			txtSolution.SetString("Please check the address and the port of the server.");
+			txtError.setString("Error while connecting to a server:");
+			txtMessage.setString(myErrorMessage);
+			txtSolution.setString("Please check the address and the port of the server.");
 			
 			std::cerr << "Error while connecting to a server: " << myErrorMessage << "\n";
 			std::cerr << "Please check the address and the port of the server.\n";
@@ -85,28 +85,28 @@ void GSError::OnEnter()
 		case CANNOTLISTENT:
 			myNextState = new GSMenu(myWindow, mySettings);
 			
-			txtError.SetString("Error while listening to a connection:");
-			txtMessage.SetString(myErrorMessage);
-			txtSolution.SetString("Please use another port or check your network configuration.");
+			txtError.setString("Error while listening to a connection:");
+			txtMessage.setString(myErrorMessage);
+			txtSolution.setString("Please use another port or check your network configuration.");
 			
 			std::cerr << "Error while listening to a connection: " << myErrorMessage << "\n";
 			std::cerr << "Please use another port and check your network configuration.\n";
 		break;
 	}
 	
-	txtError.SetColor(sf::Color::Red); txtMessage.SetColor(sf::Color::Red); txtSolution.SetColor(sf::Color::Red);
+	txtError.setColor(sf::Color::Red); txtMessage.setColor(sf::Color::Red); txtSolution.setColor(sf::Color::Red);
 	
-	txtError.SetCharacterSize(myWindow.GetWidth() / 25);
-	txtMessage.SetCharacterSize(myWindow.GetWidth() / 25);
-	txtSolution.SetCharacterSize(myWindow.GetWidth() / 30);
+	txtError.setCharacterSize(myWindow.getSize().x / 25);
+	txtMessage.setCharacterSize(myWindow.getSize().x / 25);
+	txtSolution.setCharacterSize(myWindow.getSize().x / 30);
 	
-	txtError.SetOrigin(txtError.GetRect().Width / 2.f, txtError.GetRect().Height / 2.f);
-	txtMessage.SetOrigin(txtMessage.GetRect().Width / 2.f, txtMessage.GetRect().Height / 2.f);
-	txtSolution.SetOrigin(txtSolution.GetRect().Width / 2.f, txtSolution.GetRect().Height / 2.f);
+	txtError.setOrigin(txtError.getLocalBounds().width / 2.f, txtError.getLocalBounds().height / 2.f);
+	txtMessage.setOrigin(txtMessage.getLocalBounds().width / 2.f, txtMessage.getLocalBounds().height / 2.f);
+	txtSolution.setOrigin(txtSolution.getLocalBounds().width / 2.f, txtSolution.getLocalBounds().height / 2.f);
 	
-	txtError.SetPosition(static_cast<float>(myWindow.GetWidth()) / 2.f, static_cast<float>(myWindow.GetHeight()) * 0.15f);
-	txtMessage.SetPosition(static_cast<float>(myWindow.GetWidth()) / 2.f, static_cast<float>(myWindow.GetHeight()) * 0.25f);
-	txtSolution.SetPosition(static_cast<float>(myWindow.GetWidth()) / 2.f, static_cast<float>(myWindow.GetHeight()) * 0.8f);
+	txtError.setPosition(static_cast<float>(myWindow.getSize().x) / 2.f, static_cast<float>(myWindow.getSize().y) * 0.15f);
+	txtMessage.setPosition(static_cast<float>(myWindow.getSize().x) / 2.f, static_cast<float>(myWindow.getSize().y) * 0.25f);
+	txtSolution.setPosition(static_cast<float>(myWindow.getSize().x) / 2.f, static_cast<float>(myWindow.getSize().y) * 0.8f);
 }
 
 
@@ -115,12 +115,12 @@ Status GSError::Update()
 {
 	if(myContinue)
 	{
-		while(myWindow.PollEvent(myEvent))
+		while(myWindow.pollEvent(myEvent))
 		{
-			if(myEvent.Type == sf::Event::KeyPressed)
+			if(myEvent.type == sf::Event::KeyPressed)
 				return myNextStatus;
 		
-			if(myEvent.Type == sf::Event::Closed)
+			if(myEvent.type == sf::Event::Closed)
 			{
 				if(myNextStatus == ABORT)
 					return myNextStatus;
@@ -138,9 +138,9 @@ Status GSError::Update()
 
 void GSError::Render()
 {
-	myWindow.Draw(txtError);
-	myWindow.Draw(txtMessage);
-	myWindow.Draw(txtSolution);
+	myWindow.draw(txtError);
+	myWindow.draw(txtMessage);
+	myWindow.draw(txtSolution);
 }
 
 

@@ -6,11 +6,14 @@
 #include <SFML/System.hpp>
 
 #include "GameState.hpp"
+#include "Game.hpp"
+#include "HumanPlayer.hpp"
+#include "NetworkPlayer.hpp"
 
-#include <list>
-#include <string>
-#include <utility>
-#include <string>
+#include "Chat.hpp"
+#include "NetworkThread.hpp"
+#include "Resourcemanager.hpp"
+
 
 
 namespace network
@@ -27,17 +30,6 @@ namespace network
 class GSNetworkGame : public GameState
 {
 	public:
-		enum Message
-		{
-			PING = 0,
-			PONG = 1,
-			READY = 2,
-			NAME = 3,
-			MESSAGE = 4,
-			DISCONNECT = 5
-		};
-	
-	public:
 		GSNetworkGame(sf::RenderWindow& window, Settings& settings, sf::TcpSocket* socket);
 		~GSNetworkGame();
 		
@@ -48,40 +40,27 @@ class GSNetworkGame : public GameState
 		
 		GameState* OnLeave();
 		
+	protected:
+		void ParseMessages();
+		void CheckNetworkStatus();
+		
 	private:
-		sf::TcpSocket* mySocket;
-		
-		sf::Thread myReceiverThread;
-		
-		sf::Event myEvent;
-		sf::Mutex mySenderMutex;
-		sf::Mutex myMessageMutex;
-		sf::Clock myPingClock;
-		sf::Clock myMessageClock;
-		sf::Clock myEscapeClock;
-		
 		Status myNextStatus;
 		GameState* myNextState;
+		network::Status myGameStatus; //FIXME
 		
-		network::Status myGameStatus;
+		Resourcemanager* myResourcemanager;
 		
-		std::list<std::pair<sf::Text, sf::Clock> > myChatMessages;
+		NetworkThread myNetworkThread;
+		Chat myChat;
 		
-		std::string myChatString;
-		std::size_t myCurserPosition;
+		sf::Event myEvent;
+		sf::Clock myEscapeClock;
 		
-		bool isPingSended;
-		bool isWaiting;
-		bool isScrolling;
+		HumanPlayer myHumanPlayer;
+		NetworkPlayer myNetworkPlayer;
 		
-		void UpdateMessages();
-		void CheckConnection();
-		void Edit();
-		
-		void Receive();
-		void Send(sf::Packet& packet);
-		
-		void AddMessage(const std::string& message, const sf::Color& color = sf::Color::White);
+		Game myGame;
 };
 
 

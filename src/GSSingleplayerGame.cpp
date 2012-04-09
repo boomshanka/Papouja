@@ -6,7 +6,9 @@
 
 
 GSSingleplayerGame::GSSingleplayerGame(sf::RenderWindow& window, Settings& settings) :
-GameState(window, settings), myHumanPlayer(settings), myComputerPlayer(settings), myGame(myHumanPlayer, myComputerPlayer)
+GameState(window, settings), myResourcemanager(new Resourcemanager),
+myHumanPlayer(settings, myResourcemanager), myComputerPlayer(settings, myResourcemanager),
+myGame(myHumanPlayer, myComputerPlayer, mySettings, myResourcemanager)
 {
 
 }
@@ -14,22 +16,35 @@ GameState(window, settings), myHumanPlayer(settings), myComputerPlayer(settings)
 
 GSSingleplayerGame::~GSSingleplayerGame()
 {
-
+	delete myResourcemanager;
 }
 
 
 
 void GSSingleplayerGame::OnEnter()
 {
-
+	try
+	{
+		myGame.LoadResources(sf::Vector2i(myWindow.getSize()));
+		
+		myNextStatus = CONTINUE;
+		myGame.Start();
+	}
+	catch(FileNotFoundException& ex)
+	{
+		myNextStatus = NEXTSTATE;
+		myNextState = new GSError(GameState::myWindow, GameState::mySettings, RESOURCE, ex.what());
+	}
 }
 
 
 
 Status GSSingleplayerGame::Update()
 {
-	while(myWindow.pollEvent(myEvent))
+	while(GameState::myWindow.pollEvent(myEvent))
 	{
+		//myHumanPlayer.CheckInput(myEvent);
+		
 		if(myEvent.type == sf::Event::Closed)
 		{
 			myNextStatus = QUIT;
@@ -38,18 +53,31 @@ Status GSSingleplayerGame::Update()
 		{
 			if(myEvent.key.code == sf::Keyboard::Escape)
 			{
-				if(myEscapeClock.getElapsedTime().asMilliseconds() < 500)
+				if(isEscapePressed)
 				{
-					myNextStatus = NEXTSTATE;
 					myNextState = new GSMenu(myWindow, mySettings);
+					myNextStatus = NEXTSTATE;
 				}
 				else
 				{
+					isEscapePressed = true;
 					myEscapeClock.restart();
 				}
 			}
 		}
 	}
+	
+	if(!myGame.Update())
+	{
+		
+	}
+	
+	
+	if(isEscapePressed && myEscapeClock.getElapsedTime().asMilliseconds() > 500)
+	{
+		isEscapePressed = false;
+	}
+	
 	
 	return myNextStatus;
 }

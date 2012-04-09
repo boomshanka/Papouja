@@ -29,25 +29,25 @@ void Chat::Update(const sf::Time& time)
 {
 	for(std::list<std::pair<sf::Text, sf::Clock> >::reverse_iterator it = myChatMessages.rbegin(); it != myChatMessages.rend(); ++it)
 	{
-		if((*it).second.GetElapsedTime().AsMilliseconds() < 25000)
+		if((*it).second.getElapsedTime().asMilliseconds() < 25000)
 			break;
 		
-		sf::Color color = (*it).first.GetColor();
-		color.a = static_cast<unsigned char>(-0.1275f * (static_cast<float>((*it).second.GetElapsedTime().AsMilliseconds()) - 27000.f));
-		(*it).first.SetColor(color);
+		sf::Color color = (*it).first.getColor();
+		color.a = static_cast<unsigned char>(-0.1275f * (static_cast<float>((*it).second.getElapsedTime().asMilliseconds()) - 27000.f));
+		(*it).first.setColor(color);
 	}
-	while(myChatMessages.size() > 0 && myChatMessages.back().second.GetElapsedTime().AsMilliseconds() > 27000)
+	while(myChatMessages.size() > 0 && myChatMessages.back().second.getElapsedTime().asMilliseconds() > 27000)
 	{
 		myChatMessages.pop_back();
 	}
 	
-	if(myMessageClock.GetElapsedTime().AsMilliseconds() < 1000)
+	if(myMessageClock.getElapsedTime().asMilliseconds() < 1000)
 	{
 		std::size_t i = 1;
 		for(std::list<std::pair<sf::Text, sf::Clock> >::iterator it = myChatMessages.begin(); it != myChatMessages.end(); ++it)
 		{
-			(*it).first.SetPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f - static_cast<float>(i) * myWindowSize.x / 40 +
-									 myWindowSize.x / 40 * Squared(Squared(1.f - myMessageClock.GetElapsedTime().AsSeconds())));
+			(*it).first.setPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f - static_cast<float>(i) * myWindowSize.x / 40 +
+									 myWindowSize.x / 40 * Squared(Squared(1.f - myMessageClock.getElapsedTime().asSeconds())));
 		
 			++i;
 		}
@@ -57,7 +57,7 @@ void Chat::Update(const sf::Time& time)
 		std::size_t i = 1;
 		for(std::list<std::pair<sf::Text, sf::Clock> >::iterator it = myChatMessages.begin(); it != myChatMessages.end(); ++it)
 		{
-			(*it).first.SetPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f - static_cast<float>(i) * myWindowSize.x / 40);
+			(*it).first.setPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f - static_cast<float>(i) * myWindowSize.x / 40);
 		
 			++i;
 		}
@@ -70,32 +70,32 @@ void Chat::Update(const sf::Time& time)
 
 void Chat::Edit(const sf::Event& event)
 {
-	if(event.Type == sf::Event::KeyPressed)
+	if(event.type == sf::Event::KeyPressed)
 	{
-		if(event.Key.Code == sf::Keyboard::Back && myCurserPosition > 0)
+		if(event.key.code == sf::Keyboard::Back && myCurserPosition > 0)
 		{
 			myChatString.erase(--myCurserPosition, 1);
 		}
-		else if(event.Key.Code == sf::Keyboard::Left && myCurserPosition > 0)
+		else if(event.key.code == sf::Keyboard::Left && myCurserPosition > 0)
 		{
 			--myCurserPosition;
 		}
-		else if(event.Key.Code == sf::Keyboard::Right && myChatString.length() > myCurserPosition)
+		else if(event.key.code == sf::Keyboard::Right && myChatString.length() > myCurserPosition)
 		{
 			++myCurserPosition;
 		}
-		else if(event.Key.Code == sf::Keyboard::Up)
+		else if(event.key.code == sf::Keyboard::Up)
 		{
 			myCurserPosition = 0;
 		}
-		else if(event.Key.Code == sf::Keyboard::Down)
+		else if(event.key.code == sf::Keyboard::Down)
 		{
 			myCurserPosition = myChatString.length();
 		}	
 	}
-	else if(event.Type == sf::Event::TextEntered && event.Text.Unicode != 13 && event.Text.Unicode != 8)
+	else if(event.type == sf::Event::TextEntered && event.text.unicode != 13 && event.text.unicode != 8)
 	{
-		myChatString.insert(myCurserPosition, std::size_t(1), static_cast<char>(event.Text.Unicode));
+		myChatString.insert(myCurserPosition, std::size_t(1), static_cast<char>(event.text.unicode));
 		++myCurserPosition;
 	}
 }
@@ -104,11 +104,11 @@ void Chat::Edit(const sf::Event& event)
 void Chat::AddEditedMessage(const std::string& nickname)
 {
 	myChatMessages.push_front(std::make_pair(sf::Text(nickname + ": " + myChatString), sf::Clock()));
-	myChatMessages.front().first.SetCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
-	myChatMessages.front().first.SetPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f);
-	myChatMessages.front().first.SetColor(sf::Color::White);
-	myChatMessages.front().second.Restart();
-	myMessageClock.Restart();
+	myChatMessages.front().first.setCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
+	myChatMessages.front().first.setPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f);
+	myChatMessages.front().first.setColor(sf::Color::White);
+	myChatMessages.front().second.restart();
+	myMessageClock.restart();
 	isScrolling = true;
 	
 	std::cout << nickname << ": " << myChatString << std::endl;
@@ -128,11 +128,11 @@ void Chat::ClearEditedMessage()
 void Chat::AddMessage(const std::string& message, const sf::Color& color)
 {
 	myChatMessages.push_front(std::make_pair(sf::Text(message), sf::Clock()));
-	myChatMessages.front().first.SetCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
-	myChatMessages.front().first.SetPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f);
-	myChatMessages.front().first.SetColor(color);
-	myChatMessages.front().second.Restart();
-	myMessageClock.Restart();
+	myChatMessages.front().first.setCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
+	myChatMessages.front().first.setPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f);
+	myChatMessages.front().first.setColor(color);
+	myChatMessages.front().second.restart();
+	myMessageClock.restart();
 	
 	isScrolling = true;
 	
@@ -145,16 +145,16 @@ void Chat::Draw(sf::RenderWindow& window)
 {
 	for(std::list<std::pair<sf::Text, sf::Clock> >::iterator it = myChatMessages.begin(); it != myChatMessages.end(); ++it)
 	{
-		window.Draw((*it).first);
+		window.draw((*it).first);
 	}
 	
 	if(!myChatString.empty())
 	{
 		sf::Text text("Chat:  " + myChatString);
-		text.SetCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
-		text.SetPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f + myWindowSize.x / 40);
-		text.SetColor(sf::Color::Red);
-		window.Draw(text);
+		text.setCharacterSize(static_cast<unsigned int>(myWindowSize.x / 50));
+		text.setPosition(myWindowSize.x / 50.f, myWindowSize.y * 0.6f + myWindowSize.x / 40);
+		text.setColor(sf::Color::Red);
+		window.draw(text);
 	}
 }
 

@@ -2,8 +2,8 @@
 
 
 
-NetworkSender::NetworkSender(Settings& settings) :
-HumanPlayer(settings)
+NetworkSender::NetworkSender(Settings& settings, Resourcemanager* resourcemanager) :
+HumanPlayer(settings, resourcemanager)
 {
 
 }

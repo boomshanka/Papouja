@@ -4,7 +4,7 @@
 MenuPoint::MenuPoint() :
 isActive(true)
 {
-
+	myText.setColor(sf::Color::White);
 }
 
 
@@ -17,22 +17,22 @@ MenuPoint::~MenuPoint()
 
 void MenuPoint::SetText(const std::string& text, unsigned int size)
 {
-	myText.SetString(text);
-	myText.SetCharacterSize(size);
-	myText.SetOrigin(myText.GetRect().Width / 2.f, myText.GetRect().Height / 2.f);
+	myText.setString(text);
+	myText.setCharacterSize(size);
+	myText.setOrigin(myText.getLocalBounds().width / 2.f, myText.getLocalBounds().height / 2.f);
 }
 
 
 void MenuPoint::SetFont(const sf::Font& font)
 {
-	myText.SetFont(font);
-	myText.SetOrigin(myText.GetRect().Width / 2.f, myText.GetRect().Height / 2.f);
+	myText.setFont(font);
+	myText.setOrigin(myText.getLocalBounds().width / 2.f, myText.getLocalBounds().height / 2.f);
 }
 
 
 void MenuPoint::SetPosition(const sf::Vector2f& position)
 {
-	myText.SetPosition(position);
+	myText.setPosition(position);
 }
 
 
@@ -51,26 +51,26 @@ bool MenuPoint::IsActivated()
 
 sf::FloatRect MenuPoint::GetRect()
 {
-	return myText.GetRect();
+	return myText.getLocalBounds();
 }
 
 
 void MenuPoint::Draw(sf::RenderWindow& window)
 {
-	window.Draw(myText);
+	window.draw(myText);
 }
 
 
 
 void MenuPoint::Select()
 {
-	myText.SetColor(sf::Color::Red);
+	myText.setColor(sf::Color::Red);
 }
 
 
 void MenuPoint::Deselect()
 {
-	myText.SetColor(sf::Color::White);
+	myText.setColor(sf::Color::White);
 }
 
 
@@ -107,22 +107,22 @@ void Gui::ActivateMenupoint(std::size_t number, bool activate)
 
 void Gui::SetMenupointText(std::size_t number, const std::string& text)
 {
-	myMenuPoints[number].SetText(text, myWindow.GetWidth() / 25);
+	myMenuPoints[number].SetText(text, myWindow.getSize().x / 25);
 	
 	float factor = static_cast<float>(number) * 0.15f + 0.1f;
 	if(number == 4) factor = 0.8f;
 	
-	myMenuPoints[number].SetPosition(sf::Vector2f(
-									static_cast<float>(myWindow.GetWidth()) / 2.f, factor * static_cast<float>(myWindow.GetHeight())));
+	sf::Vector2f pos(myWindow.getSize()); pos.x /= 2.f; pos.y *= factor;
+	myMenuPoints[number].SetPosition(pos);
 }
 
 
 
 void Gui::CheckEvents(const sf::Event& event)
 {
-	if(myGuiStatus != Gui::DISABLED && event.Type == sf::Event::KeyPressed)
+	if(myGuiStatus != Gui::DISABLED && event.type == sf::Event::KeyPressed)
 	{
-		switch(event.Key.Code)
+		switch(event.key.code)
 		{
 			case sf::Keyboard::Up:
 			myMenuPoints[myMenuPosition].Deselect();
@@ -205,7 +205,7 @@ void Gui::Render()
 void Gui::FadeIn()
 {
 	myGuiStatus = Gui::FADEIN;
-	myClock.Reset();
+	myClock.restart();
 	myMenuPosition = 0;
 }
 
@@ -213,7 +213,7 @@ void Gui::FadeIn()
 void Gui::FadeOut()
 {
 	myGuiStatus = Gui::FADEOUT;
-	myClock.Reset();
+	myClock.restart();
 }
 
 
@@ -227,6 +227,12 @@ Gui::GuiStatus Gui::GetGuiStatus()
 bool Gui::IsEnabled()
 {
 	return (myGuiStatus == Gui::FADEIN || myGuiStatus == Gui::ENABLED);
+}
+
+
+std::size_t Gui::GetMenuPosition()
+{
+	return myMenuPosition;
 }
 
 

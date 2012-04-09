@@ -49,16 +49,16 @@ void GSNetworkListener::OnEnter()
 
 Status GSNetworkListener::Update()
 {
-	while(GameState::myWindow.PollEvent(myEvent))
+	while(GameState::myWindow.pollEvent(myEvent))
 	{
-		if(myEvent.Type == sf::Event::Closed)
+		if(myEvent.type == sf::Event::Closed)
 		{
 			return QUIT;
 		}
 		
 		if(myMenustatus != networklistener::EDIT)
 		{
-			if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Escape)
+			if(myEvent.type == sf::Event::KeyPressed && myEvent.key.code == sf::Keyboard::Escape)
 			{
 				myNextState = new GSMenu(GameState::myWindow, GameState::mySettings, myResourcemanager);
 				
@@ -73,7 +73,7 @@ Status GSNetworkListener::Update()
 		}
 		else
 		{
-			if(myEvent.Type == sf::Event::KeyPressed && (myEvent.Key.Code == sf::Keyboard::Escape || myEvent.Key.Code == sf::Keyboard::Return))
+			if(myEvent.type == sf::Event::KeyPressed && (myEvent.key.code == sf::Keyboard::Escape || myEvent.key.code == sf::Keyboard::Return))
 			{
 				myMenustatus = networklistener::CHOOSE;
 			}
@@ -99,9 +99,9 @@ Status GSNetworkListener::Update()
 
 void GSNetworkListener::Render()
 {
-	myGuiMutex.Lock();
+	myGuiMutex.lock();
 	Gui::Render();
-	myGuiMutex.Unlock();
+	myGuiMutex.unlock();
 }
 
 
@@ -115,34 +115,34 @@ GameState* GSNetworkListener::OnLeave()
 
 void GSNetworkListener::Edit()
 {
-	if(myEvent.Type == sf::Event::KeyPressed)
+	if(myEvent.type == sf::Event::KeyPressed)
 	{
-		if(myEvent.Key.Code == sf::Keyboard::Back && myCurserPosition > 0)
+		if(myEvent.key.code == sf::Keyboard::Back && myCurserPosition > 0)
 		{
 			editstr->erase(--myCurserPosition, 1);
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Left && myCurserPosition > 0)
+		else if(myEvent.key.code == sf::Keyboard::Left && myCurserPosition > 0)
 		{
 			--myCurserPosition;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Right && editstr->length() > myCurserPosition)
+		else if(myEvent.key.code == sf::Keyboard::Right && editstr->length() > myCurserPosition)
 		{
 			++myCurserPosition;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Up)
+		else if(myEvent.key.code == sf::Keyboard::Up)
 		{
 			myCurserPosition = 0;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Down)
+		else if(myEvent.key.code == sf::Keyboard::Down)
 		{
 			myCurserPosition = editstr->length();
 		}	
 	}
-	else if(myEvent.Type == sf::Event::TextEntered && myEvent.Text.Unicode != 13 && myEvent.Text.Unicode != 8)
+	else if(myEvent.type == sf::Event::TextEntered && myEvent.text.unicode != 13 && myEvent.text.unicode != 8)
 	{
 		if(myMenupoint == networklistener::PORT)
 		{
-			switch(static_cast<char>(myEvent.Text.Unicode))
+			switch(static_cast<char>(myEvent.text.unicode))
 			{
 				case '0':
 				case '1':
@@ -154,14 +154,14 @@ void GSNetworkListener::Edit()
 				case '7':
 				case '8':
 				case '9':
-					myPortString.insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.Text.Unicode));
+					myPortString.insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.text.unicode));
 					++myCurserPosition;
 				break;
 			}
 		}
 		else
 		{
-			editstr->insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.Text.Unicode));
+			editstr->insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.text.unicode));
 			++myCurserPosition;
 		}
 	}
@@ -175,11 +175,11 @@ void GSNetworkListener::StartListening()
 	unsigned short port;
 	sstr >> port;
 	
-	if(myListener.Listen(port) == sf::Socket::Done)
+	if(myListener.listen(port) == sf::Socket::Done)
 	{
 		mySocket = new sf::TcpSocket();
-		myListener.SetBlocking(false);
-		myListenerThread.Launch();
+		myListener.setBlocking(false);
+		myListenerThread.launch();
 	}
 	else
 	{
@@ -191,9 +191,9 @@ void GSNetworkListener::StartListening()
 
 void GSNetworkListener::StopListening()
 {
-	myListener.Close();
+	myListener.close();
 	myMenustatus = networklistener::CHOOSE;
-	myListenerThread.Wait();
+	myListenerThread.wait();
 	delete mySocket;
 	mySocket = NULL;
 }
@@ -204,7 +204,7 @@ void GSNetworkListener::Listening()
 {
 	while(myMenustatus == networklistener::LISTENING)
 	{
-		switch(myListener.Accept(*mySocket))
+		switch(myListener.accept(*mySocket))
 		{
 			case sf::Socket::Done:
 				Connected();
@@ -215,15 +215,15 @@ void GSNetworkListener::Listening()
 			break;
 		}
 		
-		sf::Sleep(100);
+		sf::sleep(sf::milliseconds(100));
 	}
 	while(myMenustatus == networklistener::CONNECTED)
 	{
-		sf::Sleep(100);
+		sf::sleep(sf::milliseconds(100));
 		
-		if(mySocket->GetRemoteAddress() == sf::IpAddress::None)
+		if(mySocket->getRemoteAddress() == sf::IpAddress::None)
 		{
-			myGuiMutex.Lock();
+			myGuiMutex.lock();
 			myMenustatus = networklistener::CHOOSE;
 			delete mySocket;
 			mySocket = NULL;
@@ -232,7 +232,7 @@ void GSNetworkListener::Listening()
 			Gui::SetMenupointText(4, "Main Menu");
 			Gui::ActivateMenupoint(0, true);
 			Gui::ActivateMenupoint(1, true);
-			myGuiMutex.Unlock();
+			myGuiMutex.unlock();
 		}
 	}
 }
@@ -240,13 +240,13 @@ void GSNetworkListener::Listening()
 
 void GSNetworkListener::Connected()
 {
-	myGuiMutex.Lock();
+	myGuiMutex.lock();
 	myMenustatus = networklistener::CONNECTED;
-	myListener.Close();
+	myListener.close();
 	
-	Gui::SetMenupointText(2, "Connected! Start Game with " + mySocket->GetRemoteAddress().ToString());
+	Gui::SetMenupointText(2, "Connected! Start Game with " + mySocket->getRemoteAddress().toString());
 	Gui::SetMenupointText(4, "Drop Connection");
-	myGuiMutex.Unlock();
+	myGuiMutex.unlock();
 }
 
 
@@ -285,7 +285,7 @@ void GSNetworkListener::Slot3()
 		case networklistener::CONNECTED:
 			myNextState = new GSNetworkGame(GameState::myWindow, GameState::mySettings, mySocket);
 			myMenustatus = networklistener::CHOOSE;
-			myListenerThread.Wait();
+			myListenerThread.wait();
 			mySocket = NULL;
 			myNextStatus = NEXTSTATE;
 		break;

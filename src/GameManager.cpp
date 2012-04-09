@@ -22,6 +22,7 @@ mySettings(settings)
 GameManager::~GameManager()
 {
 	myWindow.close();
+	delete myState;
 }
 
 
@@ -58,6 +59,7 @@ int GameManager::Run()
 				
 			case QUIT:
 				myState->OnLeave();
+				delete myState;
 				myState = NULL;
 				returnValue = EXIT_SUCCESS;
 				myWindow.close();
@@ -65,6 +67,7 @@ int GameManager::Run()
 				
 			case ABORT:
 				myState->OnLeave();
+				delete myState;
 				myState = NULL;
 				returnValue = EXIT_FAILURE;
 				myWindow.close();

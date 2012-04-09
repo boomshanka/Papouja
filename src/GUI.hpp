@@ -65,6 +65,8 @@ class Gui
 		GuiStatus GetGuiStatus();
 		bool IsEnabled();
 		
+		std::size_t GetMenuPosition();
+		
 	protected:
 		sf::RenderWindow& myWindow;
 		Settings& mySettings;

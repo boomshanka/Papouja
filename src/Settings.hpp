@@ -19,6 +19,8 @@ class Settings : public iniManager
 		sf::VideoMode GetVideoMode() const;
 		sf::Uint32 GetWindowStyle() const;
 		
+		sf::Vector2f GetScaleFactor() const;
+		
 	private:
 		void Help() const;
 		void SetResolution(const std::string&);

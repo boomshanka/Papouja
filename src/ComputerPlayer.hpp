@@ -7,7 +7,7 @@
 class ComputerPlayer : public Gamefield
 {
 	public:
-		ComputerPlayer(Settings& settings);
+		ComputerPlayer(Settings& settings, Resourcemanager* resourcemanager);
 		~ComputerPlayer();
 		
 	private:

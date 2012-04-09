@@ -36,7 +36,7 @@ void GSMenu::OnEnter()
 {
 	try
 	{
-	//	myBackground.SetTexture(myResourcemanager->Get<sf::Texture>(mySettings.GetSettings("Menu", "Background")));
+	//	myBackground.SetTexture(myResourcemanager->Get<sf::Texture>(mySettings.GetSettings("Resource", "MenuBackground")));
 		Gui::LoadResources();
 		
 		Gui::SetMenupointText(0, "Singleplayer Game");

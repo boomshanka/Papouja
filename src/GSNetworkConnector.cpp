@@ -49,16 +49,16 @@ void GSNetworkConnector::OnEnter()
 
 Status GSNetworkConnector::Update()
 {
-	while(GameState::myWindow.PollEvent(myEvent))
+	while(GameState::myWindow.pollEvent(myEvent))
 	{
-		if(myEvent.Type == sf::Event::Closed)
+		if(myEvent.type == sf::Event::Closed)
 		{
 			return QUIT;
 		}
 		
 		if(myMenustatus != networkconnector::EDIT)
 		{
-			if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Escape)
+			if(myEvent.type == sf::Event::KeyPressed && myEvent.key.code == sf::Keyboard::Escape)
 			{
 				myNextState = new GSMenu(GameState::myWindow, GameState::mySettings, myResourcemanager);
 				myResourcemanager = NULL;
@@ -72,7 +72,7 @@ Status GSNetworkConnector::Update()
 		}
 		else
 		{
-			if(myEvent.Type == sf::Event::KeyPressed && (myEvent.Key.Code == sf::Keyboard::Escape || myEvent.Key.Code == sf::Keyboard::Return))
+			if(myEvent.type == sf::Event::KeyPressed && (myEvent.key.code == sf::Keyboard::Escape || myEvent.key.code == sf::Keyboard::Return))
 			{
 				myMenustatus = networkconnector::CHOOSE;
 			}
@@ -116,34 +116,34 @@ GameState* GSNetworkConnector::OnLeave()
 
 void GSNetworkConnector::Edit()
 {
-	if(myEvent.Type == sf::Event::KeyPressed)
+	if(myEvent.type == sf::Event::KeyPressed)
 	{
-		if(myEvent.Key.Code == sf::Keyboard::Back && myCurserPosition > 0)
+		if(myEvent.key.code == sf::Keyboard::Back && myCurserPosition > 0)
 		{
 			editstr->erase(--myCurserPosition, 1);
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Left && myCurserPosition > 0)
+		else if(myEvent.key.code == sf::Keyboard::Left && myCurserPosition > 0)
 		{
 			--myCurserPosition;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Right && editstr->length() > myCurserPosition)
+		else if(myEvent.key.code == sf::Keyboard::Right && editstr->length() > myCurserPosition)
 		{
 			++myCurserPosition;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Up)
+		else if(myEvent.key.code == sf::Keyboard::Up)
 		{
 			myCurserPosition = 0;
 		}
-		else if(myEvent.Key.Code == sf::Keyboard::Down)
+		else if(myEvent.key.code == sf::Keyboard::Down)
 		{
 			myCurserPosition = editstr->length();
 		}	
 	}
-	else if(myEvent.Type == sf::Event::TextEntered && myEvent.Text.Unicode != 13 && myEvent.Text.Unicode != 8)
+	else if(myEvent.type == sf::Event::TextEntered && myEvent.text.unicode != 13 && myEvent.text.unicode != 8)
 	{
 		if(myMenupoint == networkconnector::PORT)
 		{
-			switch(static_cast<char>(myEvent.Text.Unicode))
+			switch(static_cast<char>(myEvent.text.unicode))
 			{
 				case '0':
 				case '1':
@@ -155,14 +155,14 @@ void GSNetworkConnector::Edit()
 				case '7':
 				case '8':
 				case '9':
-					myPortString.insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.Text.Unicode));
+					myPortString.insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.text.unicode));
 					++myCurserPosition;
 				break;
 			}
 		}
 		else
 		{
-			editstr->insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.Text.Unicode));
+			editstr->insert(myCurserPosition, std::size_t(1), static_cast<char>(myEvent.text.unicode));
 			++myCurserPosition;
 		}
 	}
@@ -179,11 +179,11 @@ void GSNetworkConnector::Connect()
 	
 	mySocket = new sf::TcpSocket();
 	
-	switch(mySocket->Connect(sf::IpAddress(myIpString), port, 3000))
+	switch(mySocket->connect(sf::IpAddress(myIpString), port, sf::milliseconds(3000)))
 	{
 		case sf::Socket::Done:
 			myMenustatus = networkconnector::CONNECTED;
-			Gui::SetMenupointText(3, "Start Game with " + mySocket->GetRemoteAddress().ToString());
+			Gui::SetMenupointText(3, "Start Game with " + mySocket->getRemoteAddress().toString());
 			Gui::SetMenupointText(4, "Drop Connection");
 		break;
 		

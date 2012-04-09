@@ -7,7 +7,7 @@
 NetworkThread::NetworkThread(sf::TcpSocket* socket) :
 mySocket(socket), myThread(&NetworkThread::Run, this), isPingSended(false), myStatus(CONNECTED)
 {
-	mySocket->SetBlocking(false);
+	mySocket->setBlocking(false);
 }
 
 
@@ -15,9 +15,9 @@ mySocket(socket), myThread(&NetworkThread::Run, this), isPingSended(false), mySt
 NetworkThread::~NetworkThread()
 {
 	myStatus = QUIT;
-	myThread.Wait();
+	myThread.wait();
 	
-	mySocket->Disconnect();
+	mySocket->disconnect();
 	delete mySocket;
 }
 
@@ -27,22 +27,22 @@ void NetworkThread::Run()
 {
 	while(ReceiveMessages())
 	{
-		if(myPacket && !myPacket.EndOfPacket())
+		if(myPacket && !myPacket.endOfPacket())
 		{
 			ParseMessages();
-			myPacket.Clear();
+			myPacket.clear();
 		}
 		
 		CheckConnection();
 		
-		sf::Sleep(sf::Milliseconds(100));
+		sf::sleep(sf::milliseconds(100));
 	}
 }
 
 
 void NetworkThread::StartThread()
 {
-	myThread.Launch();
+	myThread.launch();
 }
 
 
@@ -55,19 +55,19 @@ void NetworkThread::StopThread()
 
 bool NetworkThread::PollMessages(sf::Packet& packet)
 {
-	myMessageMutex.Lock();
+	myMessageMutex.lock();
 	
 	if(myMessages.size() != 0)
 	{
 		packet = myMessages.top();
 		myMessages.pop();
 		
-		myMessageMutex.Unlock();
+		myMessageMutex.unlock();
 		
 		return true;
 	}
 	
-	myMessageMutex.Unlock();
+	myMessageMutex.unlock();
 	
 	return false;
 }
@@ -85,9 +85,9 @@ void NetworkThread::Send(sf::Packet& packet)
 {
 	if(myStatus == CONNECTED || myStatus == NOTREADY)
 	{
-		mySocketMutex.Lock();
+		mySocketMutex.lock();
 	
-		switch(mySocket->Send(packet))
+		switch(mySocket->send(packet))
 		{
 			case sf::Socket::Done:
 				myStatus = CONNECTED;
@@ -106,7 +106,7 @@ void NetworkThread::Send(sf::Packet& packet)
 				break;
 		}
 	
-		mySocketMutex.Unlock();
+		mySocketMutex.unlock();
 	}
 }
 
@@ -120,18 +120,18 @@ bool NetworkThread::ReceiveMessages()
 		return false;
 	}
 	
-	mySocketMutex.Lock();
+	mySocketMutex.lock();
 	
-	switch(mySocket->Receive(myPacket))
+	switch(mySocket->receive(myPacket))
 	{
 		case sf::Socket::Done:
 			myStatus = CONNECTED;
-			mySocketMutex.Unlock();
+			mySocketMutex.unlock();
 			return true;
 		
 		case sf::Socket::NotReady:
 			myStatus = NOTREADY;
-			mySocketMutex.Unlock();
+			mySocketMutex.unlock();
 			return true;
 		
 		case sf::Socket::Disconnected:
@@ -143,7 +143,7 @@ bool NetworkThread::ReceiveMessages()
 			break;
 	}
 	
-	mySocketMutex.Unlock();
+	mySocketMutex.unlock();
 	
 	return false;
 }
@@ -160,7 +160,7 @@ void NetworkThread::ParseMessages()
 	switch(message)
 	{
 		case Protocoll::PING:
-			myPacket.Clear();
+			myPacket.clear();
 			myPacket << static_cast<int>(Protocoll::PONG);
 			Send(myPacket);
 		break;
@@ -168,7 +168,7 @@ void NetworkThread::ParseMessages()
 		case Protocoll::PONG:
 			//myPing = myPingClock.GetElapsedTime().AsMilliseconds();
 			isPingSended = false;
-			myClock.Restart();
+			myClock.restart();
 		break;
 		
 		case Protocoll::DISCONNECT:
@@ -176,12 +176,12 @@ void NetworkThread::ParseMessages()
 		break;
 		
 		default:
-			myMessageMutex.Lock();
+			myMessageMutex.lock();
 			
 			myMessages.push(sf::Packet());
-			myMessages.top().Append(myPacket.GetData(), myPacket.GetDataSize());
+			myMessages.top().append(myPacket.getData(), myPacket.getDataSize());
 			
-			myMessageMutex.Unlock();
+			myMessageMutex.unlock();
 		break;
 	}
 }
@@ -193,20 +193,20 @@ void NetworkThread::CheckConnection()
 {
 	if(isPingSended)
 	{
-		if(myClock.GetElapsedTime().AsSeconds() > 10)
+		if(myClock.getElapsedTime().asSeconds() > 10)
 		{
 			myStatus = PINGTIMEOUT;
 		}
 	}
 	else
 	{
-		if(myClock.GetElapsedTime().AsSeconds() > 30)
+		if(myClock.getElapsedTime().asSeconds() > 30)
 		{
 			sf::Packet packet;
 			packet << static_cast<int>(Protocoll::PING);
 			Send(packet);
 			isPingSended = true;
-			myClock.Restart();
+			myClock.restart();
 		}
 	}
 }
