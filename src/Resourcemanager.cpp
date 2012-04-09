@@ -27,7 +27,7 @@ void Resource::Load<sf::Image>(const std::string& path)
 	{
 		myType = IMAGE;
 		myImage = new sf::Image();
-		if(!myImage->LoadFromFile(path))
+		if(!myImage->loadFromFile(path))
 			throw(FileNotFoundException(path));
 	}
 }
@@ -40,7 +40,7 @@ void Resource::Load<sf::Texture>(const std::string& path)
 	{
 		myType = TEXTURE;
 		myTexture = new sf::Texture();
-		if(!myTexture->LoadFromFile(path))
+		if(!myTexture->loadFromFile(path))
 			throw(FileNotFoundException(path));
 	}
 }
@@ -53,7 +53,7 @@ void Resource::Load<sf::SoundBuffer>(const std::string& path)
 	{
 		myType = SOUND;
 		mySound = new sf::SoundBuffer();
-		if(!mySound->LoadFromFile(path))
+		if(!mySound->loadFromFile(path))
 			throw(FileNotFoundException(path));
 	}
 }
@@ -66,7 +66,7 @@ void Resource::Load<sf::Music>(const std::string& path)
 	{
 		myType = MUSIC;
 		myMusic = new sf::Music();
-		if(!myMusic->OpenFromFile(path))
+		if(!myMusic->openFromFile(path))
 			throw(FileNotFoundException(path));
 	}
 }
@@ -79,7 +79,7 @@ void Resource::Load<sf::Font>(const std::string& path)
 	{
 		myType = FONT;
 		myFont = new sf::Font();
-		if(!myFont->LoadFromFile(path))
+		if(!myFont->loadFromFile(path))
 			throw(FileNotFoundException(path));
 	}
 }

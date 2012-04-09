@@ -48,14 +48,14 @@ void GSSettings::OnEnter()
 
 Status GSSettings::Update()
 {
-	while(GameState::myWindow.PollEvent(myEvent))
+	while(GameState::myWindow.pollEvent(myEvent))
 	{
-		if(myEvent.Type == sf::Event::Closed)
+		if(myEvent.type == sf::Event::Closed)
 		{
 			myNextStatus = QUIT;
 		}
 		
-		if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Escape)
+		if(myEvent.type == sf::Event::KeyPressed && myEvent.key.code == sf::Keyboard::Escape)
 		{
 			if(myMenupoint != settings::MAIN)
 			{

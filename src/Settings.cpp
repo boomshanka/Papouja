@@ -115,9 +115,9 @@ void Settings::SetResolution(const std::string& string)
 void Settings::SetDesktopResolution()
 {
 	std::stringstream sstr;
-	sstr << sf::VideoMode::GetDesktopMode().Width;
+	sstr << sf::VideoMode::getDesktopMode().width;
 	sstr >> iniManager::mySettings["Window"]["Width"];
-	sstr.clear(); sstr << sf::VideoMode::GetDesktopMode().Height;
+	sstr.clear(); sstr << sf::VideoMode::getDesktopMode().height;
 	sstr >> iniManager::mySettings["Window"]["Height"];
 }
 

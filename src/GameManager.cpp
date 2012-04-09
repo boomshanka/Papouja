@@ -13,15 +13,15 @@
 GameManager::GameManager(Settings& settings) :
 mySettings(settings)
 {
-	myWindow.Create(mySettings.GetVideoMode(), "Papouja", mySettings.GetWindowStyle());
-	myWindow.EnableVerticalSync(true);
-	myWindow.ShowMouseCursor(false);
+	myWindow.create(mySettings.GetVideoMode(), "Papouja", mySettings.GetWindowStyle());
+	myWindow.setVerticalSyncEnabled(true);
+	myWindow.setMouseCursorVisible(false);
 }
 
 
 GameManager::~GameManager()
 {
-	myWindow.Close();
+	myWindow.close();
 }
 
 
@@ -31,21 +31,21 @@ int GameManager::Run()
 	int returnValue = EXIT_SUCCESS;
 	GameState* temp;
 	
-	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
+	if(myWindow.isOpen() && mySettings.GetVideoMode().isValid())
 		myState = new GSMenu(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	
 	myState->OnEnter();
 	
-	while(myWindow.IsOpened())
+	while(myWindow.isOpen())
 	{
 		switch(myState->Update())
 		{
 			case CONTINUE:
-				myWindow.Clear();
+				myWindow.clear();
 				myState->Render();
-				myWindow.Display();
+				myWindow.display();
 			break;
 			
 			case NEXTSTATE:
@@ -60,14 +60,14 @@ int GameManager::Run()
 				myState->OnLeave();
 				myState = NULL;
 				returnValue = EXIT_SUCCESS;
-				myWindow.Close();
+				myWindow.close();
 			break;
 				
 			case ABORT:
 				myState->OnLeave();
 				myState = NULL;
 				returnValue = EXIT_FAILURE;
-				myWindow.Close();
+				myWindow.close();
 			break;
 			
 		}
