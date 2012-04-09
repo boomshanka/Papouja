@@ -1,9 +1,14 @@
 #ifndef GAMEFIELD_HPP
 #define GAMEFIELD_HPP
 
+#include <vector>
+#include <list>
+
+
 #include <SFML/Graphics.hpp>
 
 #include "Stone.hpp"
+#include "StonePair.hpp"
 #include "Settings.hpp"
 #include "Resourcemanager.hpp"
 
@@ -25,44 +30,50 @@ namespace gamefield
 		DOWN,
 		ROTATE
 	};
-	
-	enum Gamestatus
-	{
-		CONTINUE,
-		LOOSE
-	};
 }
 
 
 class Gamefield
 {
 	public:
-		Gamefield(Settings& settings);
+		Gamefield(Settings& settings, Resourcemanager* resourcemanager);
 		~Gamefield();
 		
-		void LoadResource();
+		void LoadResource(sf::Vector2f pos1, sf::Vector2f pos2);
+		void StartGame();
 		
-		gamefield::Gamestatus Update();
+		virtual bool Update();
 		
 		void Move(gamefield::Direction direction);
 		void StepDown();
 		
-		void NextStones();
+		const Stonepair NextStones();
 		
 		void Draw(sf::RenderWindow& window);
 		
 	private:
 		Settings& mySettings;
+		Resourcemanager* myResourcemanager;
 		
 		gamefield::Status myStatus;
 		
-		Stone* myStones[8][16];
+		std::vector<std::list<Stone> > myStoneLists;
 		
-		Stone* myMoveStones[2];
-		Stone* myNextStones[2];
+		sf::Vector2f myOrigin;
+		sf::Vector2f myTextPosition;
 		
+		Stonepair myMoveStones;
+		Stonepair myNextStones;
 		
 		Color GetRandomColor(unsigned int max_colors = 5);
+		
+		bool CheckBottomCollision();
+		bool CheckUpperPositionBottomCollision();
+		
+		bool CheckRightCollision();
+		bool CheckLeftCollision();
+		
+		bool CheckRotateCollision();
 };
 
 

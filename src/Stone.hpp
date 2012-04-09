@@ -2,6 +2,7 @@
 #define STONE_HPP
 
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Graphics.hpp>
 
 
 enum Color
@@ -10,8 +11,9 @@ enum Color
 	BLUE = 1,
 	YELLOW = 2,
 	GREEN = 3,
-	MAGENTA = 4,
-	CYAN = 5
+	CYAN = 4,
+	MAGENTA = 5,
+	BLACK = 6
 };
 
 
@@ -19,21 +21,29 @@ enum Color
 class Stone
 {
 	public:
-		Stone(const sf::Vector2i& position, Color color);
+		Stone() {}
+		Stone(const sf::Vector2i& position, const sf::Vector2f& origin, Color color, const sf::Sprite& sprite);
 		~Stone();
 		
-		const sf::Vector2i& GetPosition() {return myPosition;}
+		sf::Vector2i GetPosition();
+		sf::Vector2i GetUpperPosition();
 		Color GetColor() {return myColor;}
 		
 		void Move(const sf::Vector2i& movement);
-		bool HalfStep();
+		void StepDown();
+		
+		void Draw(sf::RenderWindow& window);
 		
 	private:
-		sf::Vector2i myPosition;
-		bool myHalfstep;
+		sf::Sprite mySprite;
 		
+		sf::Vector2i myPosition;
+		sf::Vector2f myOrigin;
+		
+		sf::Vector2f mySpriteSize;
 		Color myColor;
 		
+		void UpdateSpritePosition();
 };
 
 

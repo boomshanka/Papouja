@@ -2,8 +2,8 @@
 
 
 
-NetworkPlayer::NetworkPlayer(Settings& settings) :
-Gamefield(settings)
+NetworkPlayer::NetworkPlayer(Settings& settings, Resourcemanager* resourcemanager) :
+Gamefield(settings, resourcemanager)
 {
 
 }

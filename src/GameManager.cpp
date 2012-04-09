@@ -22,6 +22,7 @@ mySettings(settings)
 GameManager::~GameManager()
 {
 	myWindow.Close();
+	delete myState;
 }
 
 
@@ -31,14 +32,14 @@ int GameManager::Run()
 	int returnValue = EXIT_SUCCESS;
 	GameState* temp;
 	
-	if(myWindow.IsOpened() && mySettings.GetVideoMode().IsValid())
+	if(myWindow.IsOpen() && mySettings.GetVideoMode().IsValid())
 		myState = new GSMenu(myWindow, mySettings);
 	else
 		myState = new GSError(myWindow, mySettings, WRONGWINDOWSETTINGS);
 	
 	myState->OnEnter();
 	
-	while(myWindow.IsOpened())
+	while(myWindow.IsOpen())
 	{
 		switch(myState->Update())
 		{
@@ -58,6 +59,7 @@ int GameManager::Run()
 				
 			case QUIT:
 				myState->OnLeave();
+				delete myState;
 				myState = NULL;
 				returnValue = EXIT_SUCCESS;
 				myWindow.Close();
@@ -65,6 +67,7 @@ int GameManager::Run()
 				
 			case ABORT:
 				myState->OnLeave();
+				delete myState;
 				myState = NULL;
 				returnValue = EXIT_FAILURE;
 				myWindow.Close();

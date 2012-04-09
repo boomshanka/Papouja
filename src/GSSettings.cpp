@@ -81,10 +81,57 @@ Status GSSettings::Update()
 				myResourcemanager = NULL;
 			}
 		}
-		
-		if(isChoosed)
+		else if(isChoosed)
 		{
 			
+		}
+		else if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Left)
+		{
+			if(myMenupoint == settings::GAME)
+			{
+				switch(Gui::GetMenuPosition())
+				{
+					case 0:
+						
+					break;
+					
+					case 1:
+						
+					break;
+					
+					case 2:
+						
+					break;
+					
+					case 3:
+						
+					break;
+				}
+			}
+		}
+		else if(myEvent.Type == sf::Event::KeyPressed && myEvent.Key.Code == sf::Keyboard::Right)
+		{
+			if(myMenupoint == settings::GAME)
+			{
+				switch(Gui::GetMenuPosition())
+				{
+					case 0:
+						
+					break;
+					
+					case 1:
+						
+					break;
+					
+					case 2:
+						
+					break;
+					
+					case 3:
+						
+					break;
+				}
+			}
 		}
 		else
 		{
@@ -118,12 +165,11 @@ void GSSettings::Slot1()
 		case settings::MAIN:
 			Gui::SetMenupointText(0, "Music Volume: " + GameState::mySettings.GetSettings("Game", "MusicVolume"));
 			Gui::SetMenupointText(1, "Sound Volume: " + GameState::mySettings.GetSettings("Game", "SoundVolume"));
-			Gui::SetMenupointText(2, "AI Level: " + GameState::mySettings.GetSettings("Game", "AiLevel"));
-			Gui::SetMenupointText(3, "");
+			Gui::SetMenupointText(2, "Key Sensitivity: " + GameState::mySettings.GetSettings("Game", "Sensitivity"));
+			Gui::SetMenupointText(3, "AI Level: " + GameState::mySettings.GetSettings("Game", "AiLevel"));
 			Gui::SetMenupointText(4, "Back");
 		
 			myMenupoint = settings::GAME;
-			Gui::ActivateMenupoint(3, false);
 		break;
 		
 		case settings::GAME:
@@ -261,7 +307,6 @@ void GSSettings::Slot5()
 		Gui::SetMenupointText(3, "Controls Player 2");
 		Gui::SetMenupointText(4, "Main Menu");
 		Gui::ActivateMenupoint(2, true);
-		Gui::ActivateMenupoint(3, true);
 		
 		myMenupoint = settings::MAIN;
 	}

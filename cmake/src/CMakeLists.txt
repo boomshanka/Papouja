@@ -57,8 +57,14 @@ set(SRC
     ${SRCROOT}/NetworkPlayer.cpp
     ${SRCROOT}/NetworkSender.hpp
     ${SRCROOT}/NetworkSender.cpp
+    ${SRCROOT}/NetworkThread.hpp
+    ${SRCROOT}/NetworkThread.cpp
+    ${SRCROOT}/NetworkProtocoll.hpp
+    ${SRCROOT}/Chat.hpp
+    ${SRCROOT}/Chat.cpp
     ${SRCROOT}/Stone.hpp
     ${SRCROOT}/Stone.cpp
+    ${SRCROOT}/StonePair.hpp
 )
 
 # add executable

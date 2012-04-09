@@ -24,6 +24,8 @@ class GSSingleplayerGame : public GameState
 		GameState* OnLeave();
 		
 	private:
+		Resourcemanager* myResourcemanager;
+		
 		HumanPlayer myHumanPlayer;
 		ComputerPlayer myComputerPlayer;
 		
@@ -35,6 +37,7 @@ class GSSingleplayerGame : public GameState
 		sf::Event myEvent;
 		
 		sf::Clock myEscapeClock;
+		bool isEscapePressed;
 };
 
 

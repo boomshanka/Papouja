@@ -100,9 +100,9 @@ void GSError::OnEnter()
 	txtMessage.SetCharacterSize(myWindow.GetWidth() / 25);
 	txtSolution.SetCharacterSize(myWindow.GetWidth() / 30);
 	
-	txtError.SetOrigin(txtError.GetRect().Width / 2.f, txtError.GetRect().Height / 2.f);
-	txtMessage.SetOrigin(txtMessage.GetRect().Width / 2.f, txtMessage.GetRect().Height / 2.f);
-	txtSolution.SetOrigin(txtSolution.GetRect().Width / 2.f, txtSolution.GetRect().Height / 2.f);
+	txtError.SetOrigin(txtError.GetLocalBounds().Width / 2.f, txtError.GetLocalBounds().Height / 2.f);
+	txtMessage.SetOrigin(txtMessage.GetLocalBounds().Width / 2.f, txtMessage.GetLocalBounds().Height / 2.f);
+	txtSolution.SetOrigin(txtSolution.GetLocalBounds().Width / 2.f, txtSolution.GetLocalBounds().Height / 2.f);
 	
 	txtError.SetPosition(static_cast<float>(myWindow.GetWidth()) / 2.f, static_cast<float>(myWindow.GetHeight()) * 0.15f);
 	txtMessage.SetPosition(static_cast<float>(myWindow.GetWidth()) / 2.f, static_cast<float>(myWindow.GetHeight()) * 0.25f);

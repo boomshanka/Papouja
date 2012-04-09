@@ -30,26 +30,28 @@ void Settings::LoadDefaults()
 	iniManager::mySettings["Window"]["Height"] = "600";
 	iniManager::mySettings["Window"]["Style"] = WindowStyleClose;
 	
-	iniManager::mySettings["Player1"]["Left"] = "";
-	iniManager::mySettings["Player1"]["Right"] = "";
-	iniManager::mySettings["Player1"]["Down"] = "";
-	iniManager::mySettings["Player1"]["Rotate"] = "";
+	iniManager::mySettings["Player1"]["Left"] = "1";
+	iniManager::mySettings["Player1"]["Right"] = "3";
+	iniManager::mySettings["Player1"]["Down"] = "2";
+	iniManager::mySettings["Player1"]["Rotate"] = "5";
 	
 	iniManager::mySettings["Player2"]["Left"] = "a";
 	iniManager::mySettings["Player2"]["Right"] = "d";
 	iniManager::mySettings["Player2"]["Down"] = "s";
 	iniManager::mySettings["Player2"]["Rotate"] = "w";
 	
-	iniManager::mySettings["Menu"]["Background"] = "img/menu_background.png";
-	
-	iniManager::mySettings["Gui"]["Font"] = "";
-	
 	iniManager::mySettings["Game"]["Name"] = "Player";
 	iniManager::mySettings["Game"]["Ip"] = "127.0.0.1";
 	iniManager::mySettings["Game"]["Port"] = "4200";
 	iniManager::mySettings["Game"]["MusicVolume"] = "85";
 	iniManager::mySettings["Game"]["SoundVolume"] = "75";
+	iniManager::mySettings["Game"]["Sensitivity"] = "1";
 	iniManager::mySettings["Game"]["AiLevel"] = "1";
+	
+	iniManager::mySettings["Resource"]["Font"] = "img/font.ttf";
+	iniManager::mySettings["Resource"]["GameBackground"] = "img/background_game.png";
+	iniManager::mySettings["Resource"]["MenuBackground"] = "img/background_menu.png";
+	iniManager::mySettings["Resource"]["Bubbles"] = "img/bubble.png";
 }
 
 
@@ -145,6 +147,7 @@ sf::VideoMode Settings::GetVideoMode() const
 	sstr >> x; sstr.clear();
 	sstr << (*(*iniManager::mySettings.find("Window")).second.find("Height")).second;
 	sstr >> y;
+	
 	return sf::VideoMode(x, y);
 }
 
@@ -156,6 +159,12 @@ sf::Uint32 Settings::GetWindowStyle() const
 	sstr << (*(*iniManager::mySettings.find("Window")).second.find("Style")).second;
 	sstr >> style;
 	return style;
+}
+
+
+sf::Vector2f Settings::GetScaleFactor() const
+{
+	return sf::Vector2f(static_cast<float>(GetVideoMode().Width) / 1600.f, static_cast<float>(GetVideoMode().Height) / 1200.f);
 }
 
 

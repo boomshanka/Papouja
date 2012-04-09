@@ -4,7 +4,7 @@
 MenuPoint::MenuPoint() :
 isActive(true)
 {
-
+	myText.SetColor(sf::Color::White);
 }
 
 
@@ -19,14 +19,14 @@ void MenuPoint::SetText(const std::string& text, unsigned int size)
 {
 	myText.SetString(text);
 	myText.SetCharacterSize(size);
-	myText.SetOrigin(myText.GetRect().Width / 2.f, myText.GetRect().Height / 2.f);
+	myText.SetOrigin(myText.GetLocalBounds().Width / 2.f, myText.GetLocalBounds().Height / 2.f);
 }
 
 
 void MenuPoint::SetFont(const sf::Font& font)
 {
 	myText.SetFont(font);
-	myText.SetOrigin(myText.GetRect().Width / 2.f, myText.GetRect().Height / 2.f);
+	myText.SetOrigin(myText.GetLocalBounds().Width / 2.f, myText.GetLocalBounds().Height / 2.f);
 }
 
 
@@ -51,7 +51,7 @@ bool MenuPoint::IsActivated()
 
 sf::FloatRect MenuPoint::GetRect()
 {
-	return myText.GetRect();
+	return myText.GetLocalBounds();
 }
 
 
@@ -205,7 +205,7 @@ void Gui::Render()
 void Gui::FadeIn()
 {
 	myGuiStatus = Gui::FADEIN;
-	myClock.Reset();
+	myClock.Restart();
 	myMenuPosition = 0;
 }
 
@@ -213,7 +213,7 @@ void Gui::FadeIn()
 void Gui::FadeOut()
 {
 	myGuiStatus = Gui::FADEOUT;
-	myClock.Reset();
+	myClock.Restart();
 }
 
 
@@ -227,6 +227,12 @@ Gui::GuiStatus Gui::GetGuiStatus()
 bool Gui::IsEnabled()
 {
 	return (myGuiStatus == Gui::FADEIN || myGuiStatus == Gui::ENABLED);
+}
+
+
+std::size_t Gui::GetMenuPosition()
+{
+	return myMenuPosition;
 }
 
 

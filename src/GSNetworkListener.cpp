@@ -215,11 +215,11 @@ void GSNetworkListener::Listening()
 			break;
 		}
 		
-		sf::Sleep(100);
+		sf::Sleep(sf::Milliseconds(100));
 	}
 	while(myMenustatus == networklistener::CONNECTED)
 	{
-		sf::Sleep(100);
+		sf::Sleep(sf::Milliseconds(100));
 		
 		if(mySocket->GetRemoteAddress() == sf::IpAddress::None)
 		{

@@ -2,8 +2,8 @@
 
 
 
-ComputerPlayer::ComputerPlayer(Settings& settings) :
-Gamefield(settings)
+ComputerPlayer::ComputerPlayer(Settings& settings, Resourcemanager* resourcemanager) :
+Gamefield(settings, resourcemanager)
 {
 
 }

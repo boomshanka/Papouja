@@ -179,7 +179,7 @@ void GSNetworkConnector::Connect()
 	
 	mySocket = new sf::TcpSocket();
 	
-	switch(mySocket->Connect(sf::IpAddress(myIpString), port, 3000))
+	switch(mySocket->Connect(sf::IpAddress(myIpString), port, sf::Milliseconds(3000)))
 	{
 		case sf::Socket::Done:
 			myMenustatus = networkconnector::CONNECTED;
